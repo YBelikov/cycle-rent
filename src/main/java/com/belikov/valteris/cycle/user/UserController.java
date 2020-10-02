@@ -6,12 +6,15 @@ import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
@@ -28,7 +31,11 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(@ModelAttribute UserDTO userDTO,
+                                @RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
+            model.addAttribute("loginError", "Incorrect email or password!");
+        }
         return "login";
     }
 
@@ -70,11 +77,6 @@ public class UserController {
         });
         errors.put(SUCCESSFUL, FALSE);
         return errors;
-    }
-
-    @GetMapping("/index")
-    public String showHomePage() {
-        return "index";
     }
 
     @GetMapping("/myOrders")

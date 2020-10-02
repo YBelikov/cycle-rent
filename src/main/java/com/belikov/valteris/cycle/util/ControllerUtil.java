@@ -1,11 +1,19 @@
 package com.belikov.valteris.cycle.util;
 
+import com.belikov.valteris.cycle.exception.UnauthorizedException;
+import com.belikov.valteris.cycle.user.UserService;
+import com.belikov.valteris.cycle.user.model.User;
 import lombok.experimental.UtilityClass;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @UtilityClass
 public class ControllerUtil {
-//    public static final String REDIRECT = "redirect:/";
-//
+    public static User getUserFromSecurityContext(UserService service) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return service.findByUsername(username)
+                .orElseThrow(() -> new UnauthorizedException("unauthorized.request"));
+    }
+
 //    public static String parsePageNumber(String page, int totalPages, String url) {
 //        if(page == null) {
 //            return REDIRECT + url;
