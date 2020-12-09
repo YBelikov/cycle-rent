@@ -67,5 +67,25 @@
   }
 }
 
+#response {
+  margin-bottom: 30px;
+
+  ul {
+    float: left;
+    list-style: none;
+    padding: 0;
+    border: 1px solid black;
+    margin-top: 0;
+  }
+
+  input, ul {
+    width: 250px;
+  }
+
+  li:hover {
+    color: silver;
+    background: #0088cc;
+  }
+}
 
 

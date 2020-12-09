@@ -22,6 +22,8 @@ import {fillPagination} from './fill-table';
 
 let sortBy = 'PRICE_UP', bicycleType = 'ALL', pageNumber = 1;
 
+let dataAll= {};
+
 window.addEventListener('load', function () {
     const url = "/bicycles/all/sort/" + sortBy + "/type/" + bicycleType + "/page/" + pageNumber;
     getBicyclesFromServer(url);
@@ -71,3 +73,62 @@ export function navActions() {
         getBicyclesFromServer(url);
     })
 }
+
+$(document).ready(function () {
+    const delay = 500, // ms
+        minChars = 3;
+    let timeout;
+    $("#searchBox").keyup(function () {
+        const query = $("#searchBox").val();
+
+        if (timeout) clearTimeout(timeout);
+        if (query.length >= minChars) {
+
+            timeout = setTimeout(function () {
+                $.ajax({
+                    url: 'bicycleName',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: query,
+                    success: function (data) {
+                        if (data) {
+                            dataAll = data;
+                            let html = '';
+                            if (data.bicycles && data.bicycles.length) {
+                                html += '<ul class="dropdown">'
+                                data.bicycles.forEach(item => {
+                                    html += '<li>' + item.name + '</li>'
+                                })
+                                html += '</ul>';
+                            }
+                            $("#response").html(html);
+                            fillTable(data.bicycles || []);
+                            fillPagination(data.totalPages, data.currentPage);
+                        } else {
+                            $("#response").html('');
+                        }
+                    }
+                })
+            }, delay)
+
+        } else {
+            $("#response").html('');
+        }
+    });
+
+    $(document).on('click', '.dropdown li', function () {
+        let bicycle = $(this).text();
+        $("#searchBox").val(bicycle);
+        $("#response").html("");
+        if (dataAll.bicycles && dataAll.bicycles.length) {
+            console.log(dataAll)
+            dataAll.bicycles.forEach(item => {
+                if (item.name === bicycle) {
+                    fillTable([item]);
+                    fillPagination(1, 1);
+                }
+            })
+        }
+    });
+});

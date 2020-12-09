@@ -1,11 +1,10 @@
 // Styling for the contact section
 section#map {
-    padding: 0;
-    .section-heading {
-        color: $white;
-    }
-    .contacts-map {
-      width: 100%;
-      height: 450px;
-    }
+  padding: 0;
+  width: 100%;
+  height: 450px;
+
+  .section-heading {
+    color: $white;
+  }
 }

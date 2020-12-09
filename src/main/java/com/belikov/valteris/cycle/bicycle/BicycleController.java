@@ -72,6 +72,18 @@ public class BicycleController {
         return "redirect:/index";
     }
 
+    @PostMapping("/bicycleName")
+    @ResponseBody
+    public String getBicycleNames(@RequestBody String example) {
+        final Page<Bicycle> bicyclePage = bicycleService.getBicyclesLike(example);
+        int totalPages = bicyclePage.getTotalPages();
+        if(totalPages == 0) {
+            totalPages = 1;
+        }
+
+        return getJson(1, bicyclePage, totalPages);
+    }
+
     @GetMapping("/{id}")
     public Bicycle getBicycle(@PathVariable Long id) {
         return bicycleService.getById(id).get();

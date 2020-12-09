@@ -61,11 +61,10 @@ public class BicycleServiceImpl implements BicycleService {
         }
         return bicycleRepository.findAllByType(bicycleType.getStringType(), bicyclePage);
     }
-//
-//    @Override
-//    public Page<Bicycle> findSortedByTypePage(BicycleType bicycleType, int numberOfPage) {
-//        Pageable bicyclePage = PageRequest.of(numberOfPage - 1, ITEMS_PER_PAGE);
-//
-//        return bicycleRepository.findAllByType(bicycleType.getStringType(), bicyclePage);
-//    }
+
+    @Override
+    public Page<Bicycle> getBicyclesLike(String example) {
+        Pageable bicyclePage = PageRequest.of(0, ITEMS_PER_PAGE);
+        return bicycleRepository.findAllByNameLikeOrderByName("%" + example + "%", bicyclePage);
+    }
 }

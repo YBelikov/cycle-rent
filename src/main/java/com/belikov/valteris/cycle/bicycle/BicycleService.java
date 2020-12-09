@@ -18,4 +18,6 @@ public interface BicycleService {
     void delete(Long id);
 
     Page<Bicycle> findSortedPage(SortType typeOfSort, BicycleType bicycleType, int numberOfPage);
+
+    Page<Bicycle> getBicyclesLike(String example);
 }

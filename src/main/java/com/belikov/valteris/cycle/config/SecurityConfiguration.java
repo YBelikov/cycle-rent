@@ -43,6 +43,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage(LOGIN)
 
+//                .and()
+//                .oauth2Login()
+
                 .and()
                 .csrf()
                 .disable();
@@ -57,4 +60,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/static/**");
     }
+
+//    @Bean
+//    public PrincipalExtractor principalExtractor(UserRepository userRepository) {
+//        return map -> {
+//          return new User();
+//        };
+//    }
 }
