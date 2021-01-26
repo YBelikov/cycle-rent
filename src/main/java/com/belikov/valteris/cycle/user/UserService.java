@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends AuthenticationProvider {
-    void save(User user);
+    void save(UserDTO user);
 
-    List<User> getAll();
+    List<UserDTO> getAll();
 
-    Optional<User> getById(Long id);
+    Optional<UserDTO> getById(Long id);
 
     void delete(Long id);
 
     boolean register(UserDTO userDTO);
 
-    Optional<User> findByUsername(String username);
+    Optional<UserDTO> findByUsername(String username);
 }

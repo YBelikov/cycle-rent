@@ -1,14 +1,18 @@
 .buttons {
-	margin-top: 40px;
+	margin-top: 10px;
 	margin-bottom: 40px;
 	margin-left: 20px;
+	align-items: center;
+	.total h3 {
+		margin: 0;
+	}
 }
 
 .add-to-cart-btn {
 	width: 100px;
 }
 .add-to-cart-button {
-	margin: 0px;
-	margin-right: 10px;
-	background: rgb(50,120,57);
+	margin: 0 10px 0 0;
+	background: $ocean;
+	font-size: 1.5em;
 }

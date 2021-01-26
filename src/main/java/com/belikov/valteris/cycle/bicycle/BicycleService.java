@@ -1,6 +1,6 @@
 package com.belikov.valteris.cycle.bicycle;
 
-import com.belikov.valteris.cycle.bicycle.model.Bicycle;
+import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycle.model.SortType;
 import org.springframework.data.domain.Page;
@@ -9,15 +9,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BicycleService {
-    List<Bicycle> getAll();
+    List<BicycleDTO> getAll();
 
-    Optional<Bicycle> getById(Long id);
+    Optional<BicycleDTO> getById(Long id);
 
-    void save(Bicycle newBicycle);
+    void save(BicycleDTO newBicycle);
 
     void delete(Long id);
 
-    Page<Bicycle> findSortedPage(SortType typeOfSort, BicycleType bicycleType, int numberOfPage);
+    Page<BicycleDTO> findSortedPage(SortType typeOfSort, BicycleType bicycleType, int numberOfPage);
 
-    Page<Bicycle> getBicyclesLike(String example);
+    Page<BicycleDTO> getBicyclesLike(String example);
 }

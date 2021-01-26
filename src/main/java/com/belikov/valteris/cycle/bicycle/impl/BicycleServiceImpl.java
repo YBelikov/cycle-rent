@@ -3,8 +3,10 @@ package com.belikov.valteris.cycle.bicycle.impl;
 import com.belikov.valteris.cycle.bicycle.BicycleRepository;
 import com.belikov.valteris.cycle.bicycle.BicycleService;
 import com.belikov.valteris.cycle.bicycle.model.Bicycle;
+import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycle.model.SortType;
+import com.belikov.valteris.cycle.config.Mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -22,20 +25,22 @@ public class BicycleServiceImpl implements BicycleService {
 
     private static final int ITEMS_PER_PAGE = 3;
     private final BicycleRepository bicycleRepository;
+    private final Mapper<BicycleDTO, Bicycle> bicycleMapper;
 
     @Override
-    public List<Bicycle> getAll() {
-        return bicycleRepository.findAll();
+    public List<BicycleDTO> getAll() {
+        return bicycleRepository.findAll().stream()
+                .map(bicycleMapper::mapEntityToDomain).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Bicycle> getById(Long id) {
-        return bicycleRepository.findById(id);
+    public Optional<BicycleDTO> getById(Long id) {
+        return bicycleRepository.findById(id).map(bicycleMapper::mapEntityToDomain);
     }
 
     @Override
-    public void save(Bicycle newBicycle) {
-        bicycleRepository.save(newBicycle);
+    public void save(BicycleDTO newBicycle) {
+        bicycleRepository.save(bicycleMapper.mapDomainToEntity(newBicycle));
     }
 
     @Override
@@ -44,7 +49,7 @@ public class BicycleServiceImpl implements BicycleService {
     }
 
     @Override
-    public Page<Bicycle> findSortedPage(SortType typeOfSort, BicycleType bicycleType, int numberOfPage) {
+    public Page<BicycleDTO> findSortedPage(SortType typeOfSort, BicycleType bicycleType, int numberOfPage) {
         Pageable bicyclePage = PageRequest.of(numberOfPage - 1, ITEMS_PER_PAGE);
         if (typeOfSort.equals(SortType.PRICE_UP)) {
             bicyclePage = PageRequest.of(numberOfPage - 1, ITEMS_PER_PAGE, Sort.by("price"));
@@ -56,15 +61,17 @@ public class BicycleServiceImpl implements BicycleService {
             bicyclePage = PageRequest.of(numberOfPage - 1, ITEMS_PER_PAGE, Sort.by("weight").descending());
         }
 
-        if(bicycleType.equals(BicycleType.ALL)) {
-            return bicycleRepository.findAll(bicyclePage);
+        if (bicycleType.equals(BicycleType.ALL)) {
+            return bicycleRepository.findAll(bicyclePage).map(bicycleMapper::mapEntityToDomain);
         }
-        return bicycleRepository.findAllByType(bicycleType.getStringType(), bicyclePage);
+        return bicycleRepository.findAllByType(bicycleType.getStringType(), bicyclePage)
+                .map(bicycleMapper::mapEntityToDomain);
     }
 
     @Override
-    public Page<Bicycle> getBicyclesLike(String example) {
+    public Page<BicycleDTO> getBicyclesLike(String example) {
         Pageable bicyclePage = PageRequest.of(0, ITEMS_PER_PAGE);
-        return bicycleRepository.findAllByNameLikeOrderByName("%" + example + "%", bicyclePage);
+        return bicycleRepository.findAllByNameLikeOrderByName("%" + example + "%", bicyclePage)
+                .map(bicycleMapper::mapEntityToDomain);
     }
 }

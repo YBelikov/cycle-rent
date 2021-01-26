@@ -1,16 +1,16 @@
 package com.belikov.valteris.cycle.order;
 
-import com.belikov.valteris.cycle.order.model.Order;
+import com.belikov.valteris.cycle.order.model.OrderDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface OrderService {
-    void save(Order newOrder);
+    void save(OrderDTO newOrder);
 
-    List<Order> getAll();
+    List<OrderDTO> getAll();
 
-    Optional<Order> getById(Long id);
+    Optional<OrderDTO> getById(Long id);
 
     void delete(Long id);
 }

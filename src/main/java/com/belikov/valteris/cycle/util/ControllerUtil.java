@@ -2,13 +2,13 @@ package com.belikov.valteris.cycle.util;
 
 import com.belikov.valteris.cycle.exception.UnauthorizedException;
 import com.belikov.valteris.cycle.user.UserService;
-import com.belikov.valteris.cycle.user.model.User;
+import com.belikov.valteris.cycle.user.model.UserDTO;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @UtilityClass
 public class ControllerUtil {
-    public static User getUserFromSecurityContext(UserService service) {
+    public static UserDTO getUserFromSecurityContext(UserService service) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return service.findByUsername(username)
                 .orElseThrow(() -> new UnauthorizedException("unauthorized.request"));

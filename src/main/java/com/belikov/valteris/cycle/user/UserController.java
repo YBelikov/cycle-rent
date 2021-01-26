@@ -48,7 +48,7 @@ public class UserController {
     @ResponseBody
     public String registerUser(@Valid @RequestBody UserDTO userDTO) {
         final JSONObject json = new JSONObject();
-        final Optional<User> optionalUser = userService.findByUsername(userDTO.getUsername());
+        final Optional<UserDTO> optionalUser = userService.findByUsername(userDTO.getUsername());
 
         if (optionalUser.isPresent()) {
             json.put("username", "Username is already used!");
@@ -82,11 +82,6 @@ public class UserController {
     @GetMapping("/myOrders")
     public String showOrdersPage() {
         return "my-orders";
-    }
-
-    @GetMapping("/bicycle")
-    public String showBicyclePage() {
-        return "bicycle-page";
     }
 
     @GetMapping("/cart")
