@@ -1,7 +1,7 @@
 package com.belikov.valteris.cycle.order.model;
 
-import com.belikov.valteris.cycle.bicycle.model.Bicycle;
 import com.belikov.valteris.cycle.detail.model.Detail;
+import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycle;
 import com.belikov.valteris.cycle.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -33,12 +33,6 @@ public class Order {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "time_start", nullable = false)
-    private LocalDateTime timeStart;
-
-    @Column(name = "time_end", nullable = false)
-    private LocalDateTime timeEnd;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private OrderStatus status;
@@ -48,12 +42,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(name = "orders_bicycles",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "bicycle_id")
-    )
-    private List<Bicycle> bicycles;
+    @OneToMany(mappedBy = "order")
+    private List<OrderBicycle> bicycles;
 
     @ManyToMany
     @JoinTable(name = "orders_details",

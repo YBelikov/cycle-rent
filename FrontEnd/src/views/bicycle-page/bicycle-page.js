@@ -80,6 +80,26 @@ document.getElementById("timeEnd").addEventListener("change", () => {
     console.log(totalValue)
 });
 
+$("#addToBasket").click(() => {
+    let jsonData = {
+        start,
+        end,
+        optionPrice,
+        bicycleId
+    };
+    $.ajax({
+        url: '/bicycle/addToBasket',
+        method: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(jsonData),
+        success: function (data) {
+            console.log(data)
+            showTotal(data.totalValue)
+        }
+    });
+})
+
 function toMs(hhMM) {
     return (new Date('2021-12-12T' + hhMM)).getTime()
 }
@@ -99,19 +119,9 @@ function countPrice() {
         data: JSON.stringify(jsonData),
         success: function (data) {
             console.log(data)
-            //todo: return json with price
             showTotal(data.totalValue)
         }
     });
-
-
-    // let timeDifference = (end - start) / 3600000;
-    // totalValue = Number($("#bicycleContainer").attr("data-price")) * timeDifference;
-    //
-    // for (let name in optionPrice) {
-    //     totalValue += optionPrice[name];
-    // }
-
 }
 
 function showTotal(totalValue) {

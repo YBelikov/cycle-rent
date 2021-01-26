@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -105,12 +104,30 @@ public class BicycleController {
     @PostMapping(value = "/bicycle/totalPrice", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String getTotalPrice(@RequestBody String data) {
+        double totalValue = countTotalValue(data);
+        JSONObject json = new JSONObject();
+        json.put("totalValue", totalValue);
+        return json.toString();
+    }
+
+    @PostMapping(value = "/bicycle/addToBasket", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String addBicycleToBasket(@RequestBody String data) {
+        double totalValue = countTotalValue(data);
+
+        JSONObject json = new JSONObject();
+        json.put("totalValue", totalValue);
+
+        return json.toString();
+    }
+
+    private double countTotalValue(@RequestBody String data) {
         JSONObject jsonData = new JSONObject(data);
         final long bicycleId = jsonData.getLong("bicycleId");
         final Optional<BicycleDTO> bicycleDTO = bicycleService.getById(bicycleId);
 
         double totalValue = 0;
-        if(bicycleDTO.isPresent()) {
+        if (bicycleDTO.isPresent()) {
             double timeDifference = (jsonData.getDouble("end") - jsonData.getDouble("start")) / 3600000;
             totalValue = bicycleDTO.get().getPrice() * timeDifference;
         }
@@ -118,11 +135,7 @@ public class BicycleController {
         for (Object price : optionPrice.values()) {
             totalValue += (Integer) price;
         }
-
-        JSONObject json = new JSONObject();
-        json.put("totalValue", totalValue);
-
-        return json.toString();
+        return totalValue;
     }
 
     @PostMapping("/bicycle/create")

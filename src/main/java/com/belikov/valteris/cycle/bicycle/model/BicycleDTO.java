@@ -1,7 +1,7 @@
 package com.belikov.valteris.cycle.bicycle.model;
 
 import com.belikov.valteris.cycle.detail.model.DetailDTO;
-import com.belikov.valteris.cycle.order.model.OrderDTO;
+import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycleDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +20,6 @@ public class BicycleDTO {
     private double price;
     private String photo;
     private String description;
-    private List<OrderDTO> orderDTOS;
+    private List<OrderBicycleDTO> orderBicycleDTOS;
     private List<DetailDTO> detailDTOS;
 }
