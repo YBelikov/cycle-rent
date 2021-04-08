@@ -20,12 +20,12 @@ import 'bootstrap';
 require('../../js/scrolling');
 
 let totalValue = 0,
-    start = toMs($("#timeStart").val()),
-    end = toMs($("#timeEnd").val()),
+    start = Number($("#timeStart").val()),
+    end = Number($("#timeEnd").val()),
     optionPrice = {},
     bicycleId = 0;
 
-console.log(document.getElementById("bicycle-info").getAttribute("data-bicycle-id"))
+changeTimeStatus();
 
 window.addEventListener('load', function () {
     bicycleId = document.getElementById("bicycle-info").getAttribute("data-bicycle-id");
@@ -54,27 +54,16 @@ function getBicycleAndDetailsFromServer(url) {
 }
 
 document.getElementById("timeStart").addEventListener("change", () => {
-    const startValue = document.getElementById("timeStart").value;
-    start = toMs(startValue);
+    start = Number(document.getElementById("timeStart").value);
 
-    $("#timeEnd option").each((i, item) => {
-        const itemMs = toMs($(item).val());
-        if (itemMs < start) $(item).attr('disabled', 'disabled');
-        else $(item).removeAttr('disabled')
-    })
-
-    if (end < start) {
-        $("#timeEnd").val($("#timeStart").val());
-        end = start;
-    }
+    changeTimeStatus();
 
     countPrice();
     console.log(totalValue)
 });
 
 document.getElementById("timeEnd").addEventListener("change", () => {
-    const endValue = document.getElementById("timeEnd").value;
-    end = toMs(endValue);
+    end = Number(document.getElementById("timeEnd").value);
 
     countPrice();
     console.log(totalValue)
@@ -100,8 +89,17 @@ $("#addToBasket").click(() => {
     });
 })
 
-function toMs(hhMM) {
-    return (new Date('2021-12-12T' + hhMM)).getTime()
+function changeTimeStatus() {
+    $("#timeEnd option").each((i, item) => {
+        const itemNum = Number($(item).val());
+        if (itemNum < start) $(item).attr('disabled', 'disabled');
+        else $(item).removeAttr('disabled')
+    })
+
+    if (end < start) {
+        $("#timeEnd").val($("#timeStart").val());
+        end = start;
+    }
 }
 
 function countPrice() {
