@@ -1,6 +1,5 @@
 package com.belikov.valteris.cycle.user;
 
-import com.belikov.valteris.cycle.user.model.User;
 import com.belikov.valteris.cycle.user.model.UserDTO;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;

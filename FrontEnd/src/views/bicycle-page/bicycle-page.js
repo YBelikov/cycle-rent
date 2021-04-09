@@ -76,6 +76,8 @@ $("#addToBasket").click(() => {
         optionPrice,
         bicycleId
     };
+    console.log("send: ", jsonData)
+
     $.ajax({
         url: '/bicycle/addToBasket',
         method: 'POST',
@@ -83,7 +85,7 @@ $("#addToBasket").click(() => {
         dataType: 'json',
         data: JSON.stringify(jsonData),
         success: function (data) {
-            console.log(data)
+            console.log("reseive: ", data)
             showTotal(data.totalValue)
         }
     });

@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @Setter
 @NoArgsConstructor
 public class UserDTO {
+    private Long id;
 
     @NotBlank(message = "Username is required!")
     @Size(min = 3, max = 32, message = "Name must be between 3 and 32 characters long!")

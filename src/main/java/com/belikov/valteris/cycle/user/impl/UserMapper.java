@@ -13,6 +13,7 @@ public class UserMapper implements Mapper<UserDTO, User> {
             return null;
         }
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(entity.getId());
         userDTO.setUsername(entity.getUsername());
         userDTO.setEmail(entity.getEmail());
         userDTO.setPassword(entity.getPassword());
@@ -25,6 +26,7 @@ public class UserMapper implements Mapper<UserDTO, User> {
             return null;
         }
         User user = new User();
+        user.setId(domain.getId());
         user.setUsername(domain.getUsername());
         user.setEmail(domain.getEmail());
         user.setPassword(domain.getPassword());

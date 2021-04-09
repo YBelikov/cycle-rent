@@ -39,11 +39,10 @@ public class Detail {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @ManyToMany(mappedBy = "bicycles")
+    @ManyToMany(mappedBy = "details")
     private List<Order> orders;
 
     @ManyToMany(mappedBy = "details")
-    @JsonIgnoreProperties("details")
     private List<Bicycle> bicycles;
 
 }

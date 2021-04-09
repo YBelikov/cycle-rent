@@ -3,8 +3,13 @@ package com.belikov.valteris.cycle.bicycle;
 import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycle.model.SortType;
+import com.belikov.valteris.cycle.detail.DetailService;
+import com.belikov.valteris.cycle.order.OrderService;
+import com.belikov.valteris.cycle.order.model.OrderDTO;
+import com.belikov.valteris.cycle.order.model.OrderStatus;
+import com.belikov.valteris.cycle.order_bicycle.OrderBicycleService;
+import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycleDTO;
 import com.belikov.valteris.cycle.user.UserService;
-import com.belikov.valteris.cycle.user.model.User;
 import com.belikov.valteris.cycle.user.model.UserDTO;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -25,22 +30,27 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-@SessionAttributes({"user", "inBasket"})
+@SessionAttributes({"userDTO", "inBasket"})
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BicycleController {
 
     private final BicycleService bicycleService;
     private final UserService userService;
+    private final OrderService orderService;
+    private final DetailService detailService;
+    private final OrderBicycleService orderBicycleService;
 
     // В сессии для сохранения юзера и заказов (хз как по другому мона)
-    @ModelAttribute(name = "user")
-    public User user() {
-        return new User();
+    @ModelAttribute(name = "userDTO")
+    public UserDTO userDTO() {
+        return new UserDTO();
     }
 
     @ModelAttribute(name = "inBasket")
@@ -66,14 +76,21 @@ public class BicycleController {
     }
 
     @GetMapping("/index")
-    public String showHomePage() {
+    public String showHomePage(RedirectAttributes attributes, @ModelAttribute("userDTO") UserDTO userDTO, Model model) {
+        final Optional<OrderDTO> formedOrder = orderService.findByUserDTOAndStatus(userDTO, OrderStatus.FORMED);
+        if (!formedOrder.isPresent()) {
+            createNewOrder(userDTO);
+        }
+
+        model.addAttribute("userDTO", userDTO);
+//        attributes.addFlashAttribute("userDTO", userDTO);
         return "index";
     }
 
     @PostMapping("/index")
     public String performLogin(@ModelAttribute UserDTO user, RedirectAttributes attributes) {
         user = userService.findByUsername(user.getUsername()).orElse(null);
-        attributes.addFlashAttribute("user", user);
+        attributes.addFlashAttribute("userDTO", user);
         return "redirect:/index";
     }
 
@@ -112,30 +129,25 @@ public class BicycleController {
 
     @PostMapping(value = "/bicycle/addToBasket", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String addBicycleToBasket(@RequestBody String data) {
-        double totalValue = countTotalValue(data);
-
-        JSONObject json = new JSONObject();
-        json.put("totalValue", totalValue);
-
-        return json.toString();
-    }
-
-    private double countTotalValue(@RequestBody String data) {
+    public String addBicycleToBasket(@RequestBody String data, @ModelAttribute("userDTO") UserDTO userDTO,
+                                     RedirectAttributes attributes) {
         JSONObject jsonData = new JSONObject(data);
         final long bicycleId = jsonData.getLong("bicycleId");
         final Optional<BicycleDTO> bicycleDTO = bicycleService.getById(bicycleId);
+        final Optional<OrderDTO> formedOrder = orderService.findByUserDTOAndStatus(userDTO, OrderStatus.FORMED);
 
-        double totalValue = 0;
-        if (bicycleDTO.isPresent()) {
-            double timeDifference = (jsonData.getDouble("end") - jsonData.getDouble("start")) / 3600000;
-            totalValue = bicycleDTO.get().getPrice() * timeDifference;
+        saveOrderBicycleDTO(jsonData, bicycleDTO, formedOrder);
+
+        final Map<String, Object> detailPrice = jsonData.getJSONObject("optionPrice").toMap();
+        for (String detail : detailPrice.keySet()) {
+            final Long detailId = Long.valueOf(detail.substring(5));
+            formedOrder.ifPresent(orderDTO -> orderDTO.getDetailDTOS().add(detailService.getById(detailId).get()));
         }
-        final Map<String, Object> optionPrice = jsonData.getJSONObject("optionPrice").toMap();
-        for (Object price : optionPrice.values()) {
-            totalValue += (Integer) price;
-        }
-        return totalValue;
+        formedOrder.ifPresent(orderService::save);
+
+        JSONObject json = new JSONObject();
+
+        return json.toString();
     }
 
     @PostMapping("/bicycle/create")
@@ -155,6 +167,50 @@ public class BicycleController {
             numberOfPage = 1;
         }
         return numberOfPage;
+    }
+
+    private void createNewOrder(UserDTO userDTO) {
+        final OrderDTO order = new OrderDTO();
+        order.setStatus(OrderStatus.FORMED);
+        order.setUserDTO(userDTO);
+        order.setDetailDTOS(new ArrayList<>());
+        orderService.save(order);
+    }
+
+    private void saveOrderBicycleDTO(JSONObject jsonData, Optional<BicycleDTO> bicycleDTO,
+                                                Optional<OrderDTO> formedOrder) {
+        final OrderBicycleDTO orderBicycleDTO = new OrderBicycleDTO();
+        formedOrder.ifPresent(orderBicycleDTO::setOrderDTO);
+        bicycleDTO.ifPresent(orderBicycleDTO::setBicycleDTO);
+        orderBicycleDTO.setTimeStart(getLocalTime(jsonData.getDouble("start")));
+        orderBicycleDTO.setTimeEnd(getLocalTime(jsonData.getDouble("end")));
+        orderBicycleService.save(orderBicycleDTO);
+    }
+
+    private double countTotalValue(@RequestBody String data) {
+        JSONObject jsonData = new JSONObject(data);
+        final long bicycleId = jsonData.getLong("bicycleId");
+        final Optional<BicycleDTO> bicycleDTO = bicycleService.getById(bicycleId);
+
+        double totalValue = 0;
+        if (bicycleDTO.isPresent()) {
+            double timeDifference = jsonData.getDouble("end") - jsonData.getDouble("start");
+            totalValue = bicycleDTO.get().getPrice() * timeDifference;
+        }
+        final Map<String, Object> optionPrice = jsonData.getJSONObject("optionPrice").toMap();
+        for (Object price : optionPrice.values()) {
+            totalValue += (Integer) price;
+        }
+        return totalValue;
+    }
+
+    private LocalTime getLocalTime(double time) {
+        final int hours = (int) time;
+        int minutes = 0;
+        if (time - hours != 0) {
+            minutes = 30;
+        }
+        return LocalTime.of(hours, minutes);
     }
 
     private String getJson(@PathVariable int numberOfPage, Page<BicycleDTO> bicyclePage, int totalPages) {

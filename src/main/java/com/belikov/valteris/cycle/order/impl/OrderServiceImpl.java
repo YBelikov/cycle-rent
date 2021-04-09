@@ -5,6 +5,9 @@ import com.belikov.valteris.cycle.order.OrderRepository;
 import com.belikov.valteris.cycle.order.OrderService;
 import com.belikov.valteris.cycle.order.model.Order;
 import com.belikov.valteris.cycle.order.model.OrderDTO;
+import com.belikov.valteris.cycle.order.model.OrderStatus;
+import com.belikov.valteris.cycle.user.model.User;
+import com.belikov.valteris.cycle.user.model.UserDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final Mapper<OrderDTO, Order> orderMapper;
+    private final Mapper<UserDTO, User> userMapper;
 
     @Override
     public void save(OrderDTO newOrder) {
@@ -39,5 +43,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void delete(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<OrderDTO> findByUserDTOAndStatus(UserDTO userDTO, OrderStatus orderStatus) {
+        return orderRepository.findByUserAndStatus(userMapper.mapDomainToEntity(userDTO), orderStatus)
+                .map(orderMapper::mapEntityToDomain);
     }
 }
