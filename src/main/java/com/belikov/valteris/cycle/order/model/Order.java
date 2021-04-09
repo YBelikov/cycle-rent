@@ -37,13 +37,12 @@ public class Order {
     @Column(name = "status", nullable = false)
     private OrderStatus status;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderBicycle> bicycles;
+    private List<OrderBicycle> orderBicycles;
 
     @ManyToMany
     @JoinTable(name = "orders_details",

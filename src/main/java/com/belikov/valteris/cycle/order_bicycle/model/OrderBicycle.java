@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -28,17 +27,17 @@ public class OrderBicycle {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @ManyToOne
+    @JoinColumn(columnDefinition = "id")
     private Order order;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bicycle_id")
+    @ManyToOne
+    @JoinColumn(columnDefinition = "id")
     private Bicycle bicycle;
 
     @Column(name = "time_start", nullable = false)
-    private LocalDateTime timeStart;
+    private LocalTime timeStart;
 
     @Column(name = "time_end", nullable = false)
-    private LocalDateTime timeEnd;
+    private LocalTime timeEnd;
 }

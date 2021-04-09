@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,6 @@ public class BicycleDTO {
     private double price;
     private String photo;
     private String description;
-    private List<OrderBicycleDTO> orderBicycleDTOS;
+    private List<OrderBicycleDTO> orderBicycleDTOS = new ArrayList<>();
     private List<DetailDTO> detailDTOS;
 }

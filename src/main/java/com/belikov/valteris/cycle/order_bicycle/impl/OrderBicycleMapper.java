@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class OrderBicycleMapper implements Mapper<OrderBicycleDTO, OrderBicycle> {
     private final OrderMapper orderMapper;
     private final BicycleMapper bicycleMapper;
+
     @Override
     public OrderBicycleDTO mapEntityToDomain(OrderBicycle entity) {
         if (entity == null) {

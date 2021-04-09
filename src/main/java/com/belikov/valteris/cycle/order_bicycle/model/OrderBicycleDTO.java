@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -15,6 +15,6 @@ public class OrderBicycleDTO {
     private Long id;
     private OrderDTO orderDTO;
     private BicycleDTO bicycleDTO;
-    private LocalDateTime timeStart;
-    private LocalDateTime timeEnd;
+    private LocalTime timeStart;
+    private LocalTime timeEnd;
 }

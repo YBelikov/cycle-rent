@@ -4,7 +4,6 @@ import com.belikov.valteris.cycle.bicycle.model.Bicycle;
 import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.config.Mapper;
 import com.belikov.valteris.cycle.detail.impl.DetailMapper;
-import com.belikov.valteris.cycle.order_bicycle.impl.OrderBicycleMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,8 +13,8 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BicycleMapper implements Mapper<BicycleDTO, Bicycle> {
+
     private final DetailMapper detailMapper;
-    private final OrderBicycleMapper orderBicycleMapper;
 
     @Override
     public BicycleDTO mapEntityToDomain(Bicycle entity) {
@@ -33,8 +32,6 @@ public class BicycleMapper implements Mapper<BicycleDTO, Bicycle> {
         bicycleDTO.setDescription(entity.getDescription());
         bicycleDTO.setDetailDTOS(entity.getDetails().stream()
                 .map(detailMapper::mapEntityToDomain).collect(Collectors.toList()));
-        bicycleDTO.setOrderBicycleDTOS(entity.getOrderBicycles().stream()
-                .map(orderBicycleMapper::mapEntityToDomain).collect(Collectors.toList()));
         return bicycleDTO;
     }
 
@@ -54,8 +51,6 @@ public class BicycleMapper implements Mapper<BicycleDTO, Bicycle> {
         bicycle.setDescription(domain.getDescription());
         bicycle.setDetails(domain.getDetailDTOS().stream()
                 .map(detailMapper::mapDomainToEntity).collect(Collectors.toList()));
-        bicycle.setOrderBicycles(domain.getOrderBicycleDTOS().stream()
-                .map(orderBicycleMapper::mapDomainToEntity).collect(Collectors.toList()));
         return bicycle;
     }
 }

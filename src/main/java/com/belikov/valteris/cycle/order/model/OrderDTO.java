@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,6 +17,6 @@ public class OrderDTO {
     private Long id;
     private OrderStatus status;
     private UserDTO userDTO;
-    private List<OrderBicycleDTO> orderBicycleDTOS;
+    private List<OrderBicycleDTO> orderBicycleDTOS = new ArrayList<>();
     private List<DetailDTO> detailDTOS;
 }
