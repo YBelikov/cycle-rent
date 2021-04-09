@@ -1,3 +1,5 @@
+import {fillBicycle, fillDetails} from "./fill-bicycle";
+
 require('./bicycle-page.scss');
 
 import 'bootstrap';
@@ -16,3 +18,112 @@ import 'bootstrap';
 // // import 'bootstrap/js/src/util';
 
 require('../../js/scrolling');
+
+let totalValue = 0,
+    start = Number($("#timeStart").val()),
+    end = Number($("#timeEnd").val()),
+    optionPrice = {},
+    bicycleId = 0;
+
+changeTimeStatus();
+
+window.addEventListener('load', function () {
+    bicycleId = document.getElementById("bicycle-info").getAttribute("data-bicycle-id");
+    const url = "/api/bicycle/" + bicycleId;
+    getBicycleAndDetailsFromServer(url);
+});
+
+function getBicycleAndDetailsFromServer(url) {
+    $.get(url, function (data) {
+        fillBicycle(data || "");
+        fillDetails(data.detailDTOS || []);
+
+        $("input[class=custom-control-input]").each((i, item) => {
+            console.log(item)
+            $(item).on("change", () => {
+
+                const name = $(item).attr('id');
+
+                if ($(item).prop("checked")) optionPrice[name] = Number($(item).attr("data-price"));
+                else delete optionPrice[name];
+
+                countPrice();
+            })
+        })
+    })
+}
+
+document.getElementById("timeStart").addEventListener("change", () => {
+    start = Number(document.getElementById("timeStart").value);
+
+    changeTimeStatus();
+
+    countPrice();
+    console.log(totalValue)
+});
+
+document.getElementById("timeEnd").addEventListener("change", () => {
+    end = Number(document.getElementById("timeEnd").value);
+
+    countPrice();
+    console.log(totalValue)
+});
+
+$("#addToBasket").click(() => {
+    let jsonData = {
+        start,
+        end,
+        optionPrice,
+        bicycleId
+    };
+    console.log("send: ", jsonData)
+
+    $.ajax({
+        url: '/bicycle/addToBasket',
+        method: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(jsonData),
+        success: function (data) {
+            console.log("reseive: ", data)
+            showTotal(data.totalValue)
+        }
+    });
+})
+
+function changeTimeStatus() {
+    $("#timeEnd option").each((i, item) => {
+        const itemNum = Number($(item).val());
+        if (itemNum < start) $(item).attr('disabled', 'disabled');
+        else $(item).removeAttr('disabled')
+    })
+
+    if (end < start) {
+        $("#timeEnd").val($("#timeStart").val());
+        end = start;
+    }
+}
+
+function countPrice() {
+    let jsonData = {
+        start,
+        end,
+        optionPrice,
+        bicycleId
+    };
+    $.ajax({
+        url: '/bicycle/totalPrice',
+        method: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(jsonData),
+        success: function (data) {
+            console.log(data)
+            showTotal(data.totalValue)
+        }
+    });
+}
+
+function showTotal(totalValue) {
+    $("#totalPrice").text(totalValue);
+}

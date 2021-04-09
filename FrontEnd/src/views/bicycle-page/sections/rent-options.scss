@@ -1,5 +1,8 @@
 .rent-options-container { 
     margin-top: 20px;
+	#timeEnd option[disabled] {
+		color: #cccccc;
+	}
 }
 
 .time {

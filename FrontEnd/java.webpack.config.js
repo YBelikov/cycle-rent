@@ -180,6 +180,10 @@ module.exports = {
           to: path.join(__dirname, '../src/main/resources/static/img/bicycles/')
         },
         {
+          from: path.join(__dirname, './assets/images/details/'),
+          to: path.join(__dirname, '../src/main/resources/static/img/details/')
+        },
+        {
           from: path.join(__dirname, './assets/images/logos/icon.png'),
           to: path.join(__dirname, '../src/main/resources/static/img/favicon.png')
         },

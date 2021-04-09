@@ -177,6 +177,7 @@ module.exports = {
       patterns: [
         { from: path.join(__dirname, './src/json'), to: path.join(__dirname, './dist/json') },
         { from: path.join(__dirname, './assets/images/bicycles'), to: path.join(__dirname, './dist/img/bicycles') },
+        { from: path.join(__dirname, './assets/images/details'), to: path.join(__dirname, './dist/img/details') },
         { from: path.join(__dirname, './assets/images/logos/icon.png'), to: path.join(__dirname, './dist/img/favicon.png') },
       ],
     }),

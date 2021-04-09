@@ -14,11 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
 
@@ -31,18 +31,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder encoder;
 
     @Override
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(UserDTO user) {
+        userRepository.save(userMapper.mapDomainToEntity(user));
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDTO> getAll() {
+        return userRepository.findAll().stream()
+                .map(userMapper::mapEntityToDomain).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<User> getById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDTO> getById(Long id) {
+        return userRepository.findById(id).map(userMapper::mapEntityToDomain);
     }
 
     @Override
@@ -61,8 +62,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUsername (String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserDTO> findByUsername(String username) {
+        return userRepository.findByUsername(username).map(userMapper::mapEntityToDomain);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
         User userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadCredentialsException("Incorrect email or password!"));
 
-        if(encoder.matches(password, userEntity.getPassword())) {
+        if (encoder.matches(password, userEntity.getPassword())) {
             return new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword(), getAuthorities(userEntity));
         }
         throw new BadCredentialsException("Incorrect email or password!");
