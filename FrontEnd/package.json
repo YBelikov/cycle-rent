@@ -11,11 +11,11 @@
   },
   "homepage": "https://github.com/twbs/bootstrap-npm-starter#readme",
   "scripts": {
-    "site:dev": "SET NODE_ENV=development&&  webpack-dev-server",
-    "site:prod": "SET NODE_ENV=production&&  webpack",
+    "site:dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "site:prod": "cross-env NODE_ENV=production webpack",
     "serve": "serve ./dist",
-    "java:dev": "SET NODE_ENV=development&&  webpack-dev-server --config java.webpack.config.js",
-    "java:prod": "SET NODE_ENV=production&&  webpack --config java.webpack.config.js"
+    "java:dev": "cross-env NODE_ENV=development webpack-dev-server --config java.webpack.config.js",
+    "java:prod": "cross-env NODE_ENV=production webpack --config java.webpack.config.js"
   },
   "keywords": [
     "bootstrap",
@@ -29,6 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.5.2",
+    "cross-env": "^7.0.3",
     "popper.js": "^1.16.1",
     "serve": "^11.3.2"
   },
