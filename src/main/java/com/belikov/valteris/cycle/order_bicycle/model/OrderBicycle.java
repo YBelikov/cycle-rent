@@ -28,11 +28,11 @@ public class OrderBicycle {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(columnDefinition = "id")
+//    @JoinColumn(columnDefinition = "id")
     private Order order;
 
     @ManyToOne
-    @JoinColumn(columnDefinition = "id")
+//    @JoinColumn(columnDefinition = "id")
     private Bicycle bicycle;
 
     @Column(name = "time_start", nullable = false)

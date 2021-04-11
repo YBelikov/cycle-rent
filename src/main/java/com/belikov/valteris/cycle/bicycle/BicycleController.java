@@ -140,13 +140,12 @@ public class BicycleController {
 
         final Map<String, Object> detailPrice = jsonData.getJSONObject("optionPrice").toMap();
         for (String detail : detailPrice.keySet()) {
-            final Long detailId = Long.valueOf(detail.substring(5));
-            formedOrder.ifPresent(orderDTO -> orderDTO.getDetailDTOS().add(detailService.getById(detailId).get()));
+            formedOrder.ifPresent(orderDTO -> orderDTO.getDetailDTOS()
+                .add(detailService.getById(Long.valueOf(detail.substring(5))).get()));
         }
         formedOrder.ifPresent(orderService::save);
 
         JSONObject json = new JSONObject();
-
         return json.toString();
     }
 
@@ -188,9 +187,8 @@ public class BicycleController {
     }
 
     private double countTotalValue(@RequestBody String data) {
-        JSONObject jsonData = new JSONObject(data);
-        final long bicycleId = jsonData.getLong("bicycleId");
-        final Optional<BicycleDTO> bicycleDTO = bicycleService.getById(bicycleId);
+        final JSONObject jsonData = new JSONObject(data);
+        final Optional<BicycleDTO> bicycleDTO = bicycleService.getById(jsonData.getLong("bicycleId"));
 
         double totalValue = 0;
         if (bicycleDTO.isPresent()) {

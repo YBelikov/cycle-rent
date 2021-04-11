@@ -86,7 +86,15 @@ $("#addToBasket").click(() => {
         data: JSON.stringify(jsonData),
         success: function (data) {
             console.log("reseive: ", data)
-            showTotal(data.totalValue)
+            // showTotal(data.totalValue)
+            $("#bicycleAdded").show();
+            const timeout = setTimeout(() => {
+                $("#bicycleAdded").hide();
+                clearTimeout(timeout)
+            }, 4000)
+
+            const pageTop = $('.master-head').offset().top;
+            $(window.opera ? 'html' : 'html, body').animate({scrollTop: pageTop}, 1000);
         }
     });
 })

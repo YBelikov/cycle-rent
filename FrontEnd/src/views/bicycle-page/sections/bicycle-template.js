@@ -10,6 +10,9 @@ export const getBicycleTemplate =
          description = ''
      }) =>
         `<div id="bicycleContainer" class="bicycle-info container" style="margin-top: 30px;" data-price="${price}">
+            <div id="bicycleAdded" class="alert alert-success" role="alert" style="display: none;">
+                Bicycle and details are sucessfully aded to basket!
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="bicycle-image-wrapper"><img class="bicycle-image w-100 d-block"
