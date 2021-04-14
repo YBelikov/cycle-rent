@@ -2,7 +2,9 @@ package com.belikov.valteris.cycle.order.model;
 
 import com.belikov.valteris.cycle.detail.model.Detail;
 import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycle;
+import com.belikov.valteris.cycle.place.model.Place;
 import com.belikov.valteris.cycle.user.model.User;
+import javax.persistence.FetchType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,6 +42,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "place_id")
+    private Place place;
 
     @OneToMany(mappedBy = "order")
     private List<OrderBicycle> orderBicycles;

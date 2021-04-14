@@ -1,5 +1,8 @@
 package com.belikov.valteris.cycle.place.model;
 
+import com.belikov.valteris.cycle.order.model.Order;
+import java.util.List;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,4 +33,7 @@ public class Place {
 
     @Column(name = "len", nullable = false)
     private double len;
+
+    @OneToMany
+    private List<Order> orders;
 }
