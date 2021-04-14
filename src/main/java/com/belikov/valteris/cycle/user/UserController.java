@@ -83,11 +83,6 @@ public class UserController {
         return "my-orders";
     }
 
-    @GetMapping("/cart")
-    public String showCartPage() {
-        return "cart-page";
-    }
-
     @GetMapping("/checkout")
     public String showCheckoutPage() {
         return "checkout-page";

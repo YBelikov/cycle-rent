@@ -1,20 +1,29 @@
-<div class="row py-5 p-4 bg-white rounded shadow-sm">
-    <div class="col-lg-6"></div>
-    <div class="col-lg-6">
-        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary</div>
-        <div class="p-4">
-            <p class="font-italic mb-4">For each hour after overusing time limit you have to pay 75% of
-                rent price per hour</p>
-            <ul class="list-unstyled mb-4">
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong
-                        class="text-muted">Total</strong>
-                    <h5 class="font-weight-bold">390.00 UAH</h5>
-                </li>
-            </ul>
-            <a th:href="@{/checkout}" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to
-                checkout</a>
-            <a th:href="@{/bicycles}" class="btn btn-dark rounded-pill py-2 btn-block">Return to
-                list</a>
-        </div>
+<div class="checkout-area row py-5 p-4 bg-white rounded">
+  <div class="col-lg-6">
+    <div class="bg-light px-4 py-3 text-uppercase font-weight-bold">Choose pick up place:</div>
+    <div class="dropdown pt-2">
+      <button
+          class="px-4 py-3 text-uppercase btn btn-outline-dark btn-block dropdown-toggle"
+          type="button" id="placeDropdown" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+        [Choose pick up place]
+      </button>
+      <div id="forPlaces" class="dropdown-menu place-dropdown" aria-labelledby="placeDropdown">
+      </div>
     </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="bg-light px-4 py-3 text-uppercase font-weight-bold">Order summary</div>
+    <div class="p-4">
+      <ul class="list-unstyled mb-4">
+        <li class="d-flex justify-content-between py-3 border-bottom"><strong
+            class="text-muted">Total</strong>
+          <h5 class="font-weight-bold">390.00 UAH</h5>
+        </li>
+      </ul>
+      <a th:href="@{/checkout}" class="btn btn-dark py-2 btn-block">Procceed to
+        checkout</a>
+      <a th:href="@{/bicycles}" class="btn btn-dark py-2 btn-block">Return to list</a>
+    </div>
+  </div>
 </div>

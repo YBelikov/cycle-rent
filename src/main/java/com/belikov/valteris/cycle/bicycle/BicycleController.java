@@ -37,7 +37,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-@SessionAttributes({"userDTO", "inBasket"})
+@SessionAttributes({"userDTO"})
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BicycleController {
 
@@ -51,28 +51,6 @@ public class BicycleController {
     @ModelAttribute(name = "userDTO")
     public UserDTO userDTO() {
         return new UserDTO();
-    }
-
-    @ModelAttribute(name = "inBasket")
-    public int inBasket() {
-        return 0;
-    }
-
-    @GetMapping("/bicycles")
-    public String bicyclesListPage() {
-        return "bicycle-list";
-    }
-
-    @GetMapping("/bicycles/all/sort/{typeOfSort}/type/{bicycleType}/page/{numberOfPage}")
-    @ResponseBody
-    public String getSortedPageOfBicycles(@PathVariable String typeOfSort,
-                                          @PathVariable String bicycleType, @PathVariable int numberOfPage) {
-        final Page<BicycleDTO> bicyclePage = bicycleService.findSortedPage(SortType.valueOf(typeOfSort),
-                BicycleType.valueOf(bicycleType), numberOfPage);
-        final int totalPages = bicyclePage.getTotalPages();
-        numberOfPage = checkNumberOfPage(numberOfPage, totalPages);
-
-        return getJson(numberOfPage, bicyclePage, totalPages);
     }
 
     @GetMapping("/index")
@@ -92,6 +70,23 @@ public class BicycleController {
         user = userService.findByUsername(user.getUsername()).orElse(null);
         attributes.addFlashAttribute("userDTO", user);
         return "redirect:/index";
+    }
+
+    @GetMapping("/bicycles")
+    public String bicyclesListPage() {
+        return "bicycle-list";
+    }
+
+    @GetMapping("/bicycles/all/sort/{typeOfSort}/type/{bicycleType}/page/{numberOfPage}")
+    @ResponseBody
+    public String getSortedPageOfBicycles(@PathVariable String typeOfSort,
+                                          @PathVariable String bicycleType, @PathVariable int numberOfPage) {
+        final Page<BicycleDTO> bicyclePage = bicycleService.findSortedPage(SortType.valueOf(typeOfSort),
+                BicycleType.valueOf(bicycleType), numberOfPage);
+        final int totalPages = bicyclePage.getTotalPages();
+        numberOfPage = checkNumberOfPage(numberOfPage, totalPages);
+
+        return getJson(numberOfPage, bicyclePage, totalPages);
     }
 
     @PostMapping("/bicycleName")

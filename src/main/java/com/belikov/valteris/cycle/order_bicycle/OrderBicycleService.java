@@ -1,5 +1,6 @@
 package com.belikov.valteris.cycle.order_bicycle;
 
+import com.belikov.valteris.cycle.order.model.OrderDTO;
 import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycleDTO;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface OrderBicycleService {
     Optional<OrderBicycleDTO> getById(Long id);
 
     void delete(Long id);
+
+    List<OrderBicycleDTO> findAllByOrder(OrderDTO orderDTO);
 }

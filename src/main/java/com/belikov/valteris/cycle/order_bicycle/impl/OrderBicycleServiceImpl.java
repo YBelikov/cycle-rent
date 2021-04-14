@@ -1,6 +1,8 @@
 package com.belikov.valteris.cycle.order_bicycle.impl;
 
 import com.belikov.valteris.cycle.config.Mapper;
+import com.belikov.valteris.cycle.order.model.Order;
+import com.belikov.valteris.cycle.order.model.OrderDTO;
 import com.belikov.valteris.cycle.order_bicycle.OrderBicycleRepository;
 import com.belikov.valteris.cycle.order_bicycle.OrderBicycleService;
 import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycle;
@@ -19,6 +21,7 @@ public class OrderBicycleServiceImpl implements OrderBicycleService {
 
     private final OrderBicycleRepository orderBicycleRepository;
     private final Mapper<OrderBicycleDTO, OrderBicycle> orderBicycleMapper;
+    private final Mapper<OrderDTO, Order> orderMapper;
 
     @Override
     public void save(OrderBicycleDTO orderBicycleDTO) {
@@ -28,7 +31,7 @@ public class OrderBicycleServiceImpl implements OrderBicycleService {
     @Override
     public List<OrderBicycleDTO> getAll() {
         return orderBicycleRepository.findAll().stream()
-                .map(orderBicycleMapper::mapEntityToDomain).collect(Collectors.toList());
+            .map(orderBicycleMapper::mapEntityToDomain).collect(Collectors.toList());
     }
 
     @Override
@@ -39,5 +42,11 @@ public class OrderBicycleServiceImpl implements OrderBicycleService {
     @Override
     public void delete(Long id) {
         orderBicycleRepository.deleteById(id);
+    }
+
+    @Override
+    public List<OrderBicycleDTO> findAllByOrder(OrderDTO orderDTO) {
+        return orderBicycleRepository.findAllByOrder(orderMapper.mapDomainToEntity(orderDTO)).stream()
+            .map(orderBicycleMapper::mapEntityToDomain).collect(Collectors.toList());
     }
 }
