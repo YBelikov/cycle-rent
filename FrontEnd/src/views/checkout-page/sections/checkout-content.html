@@ -1,69 +1,72 @@
 <div class="checkout-container container py-5">
-    <div class="checkout-content row">
-        <div class="checkout-table col-lg-7 mx-auto">
+  <div class="checkout-content row">
+    <div class="checkout-table col-lg-7 mx-auto">
 
-            <div class="bg-white rounded-lg shadow-sm p-5">
-               <include src="./tabs.html">
+      <div class="bg-white rounded-lg shadow-sm p-5">
+        <include src="./tabs.html"/>
 
-                <!-- Credit card form content -->
-                <div class="tab-content">
+        <!-- Credit card form content -->
+        <div class="tab-content">
 
-                    <!-- credit card info-->
-                    <div id="nav-tab-card" class="tab-pane fade show active">
-                        <p class="alert alert-success">Some text success or error</p>
-                        <form role="form">
-                            <div class="form-group">
-                                <label for="username">Full name (on the card)</label>
-                                <input type="text" name="username" placeholder="Jeff Doe" required class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">Card number</label>
-                                <div class="input-group">
-                                    <input type="text" name="cardNumber" placeholder="Your card number"
-                                           class="form-control" required>
-                                    <div class="input-group-append">
-                    <span class="input-group-text text-muted">
-                                                <i class="fa fa-cc-visa mx-1"></i>
-                                                <i class="fa fa-cc-amex mx-1"></i>
-                                                <i class="fa fa-cc-mastercard mx-1"></i>
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <label><span class="hidden-xs">Expiration</span></label>
-                                        <div class="input-group">
-                                            <input type="number" placeholder="MM" name="" class="form-control" required>
-                                            <input type="number" placeholder="YY" name="" class="form-control" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group mb-4">
-                                        <label data-toggle="tooltip" title="Three-digits code on the back of your card">CVV
-                                            <i class="fa fa-question-circle"></i>
-                                        </label>
-                                        <input type="text" required class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <h5 style="margin-bottom: 10px;"><a href="#" class="text-dark d-inline-block align-middle">Price:
-                                390 UAH</a></h5>
-                            <button type="button" class="subscribe btn btn-dark btn-block rounded-pill shadow-sm">
-                                Confirm
-                            </button>
-                            <button type="button" class="subscribe btn btn-dark btn-block rounded-pill shadow-sm"
-                                    th:href="@{/cart}"> Cancel
-                            </button>
-                        </form>
-                    </div>
-                    <!-- End -->
-                </div>
-                <!-- End -->
-
+          <!-- credit card info-->
+          <div id="nav-tab-card" class="tab-pane fade show active">
+            <p class="alert alert-danger" id="error-msg"></p>
+            <div class="form-group">
+              <label for="username">Full name (on the card)</label>
+              <input type="text" id="username" placeholder="Jeff Doe" required value="Lizz Simson"
+                     class="form-control">
             </div>
+            <div class="form-group">
+              <label for="cardNumber">Card number</label>
+              <div class="input-group">
+                <input type="text" id="cardNumber" placeholder="Your card number"
+                       class="form-control" required value="5105105105105100">
+                <div class="input-group-append">
+                    <span class="input-group-text text-muted">
+                      <em class="fab fa-cc-visa mx-1"></em>
+                      <em class="fab fa-cc-amex mx-1"></em>
+                      <em class="fab fa-cc-mastercard mx-1"></em>
+                    </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <label><span class="hidden-xs">Expiration</span></label>
+                  <div class="input-group">
+                    <input type="number" placeholder="MM" id="MM" class="form-control" required value="2">
+                    <input type="number" placeholder="YY" id="YY" class="form-control" required value="23">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group mb-4">
+                  <label for="cvv">CVV</label>
+                  <input id="cvv" type="password" required class="form-control" value="123">
+                </div>
+              </div>
+            </div>
+            <h5 class="text-dark align-middle mb-2">
+              Price: <span id="total-price"></span> UAH
+            </h5>
+
+            <h5 class="text-dark align-middle mb-2">
+              Pick up at: <span id="pick-up-place"></span>
+            </h5>
+            <button id="confirm-btn"
+                    class="subscribe btn btn-dark btn-block rounded-pill shadow-sm">
+              Confirm
+            </button>
+            <a class="subscribe btn btn-dark btn-block rounded-pill shadow-sm" href="/cart">
+              Cancel
+            </a>
+          </div>
+          <!-- End -->
         </div>
+        <!-- End -->
+
+      </div>
     </div>
+  </div>
 </div>

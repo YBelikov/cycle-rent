@@ -33,7 +33,7 @@ window.addEventListener('load', function () {
     }
     $.ajax({
       url: '/checkout',
-      method: 'POST',
+      method: 'PUT',
       contentType: 'application/json',
       data: JSON.stringify(data),
       success: function () {

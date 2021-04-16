@@ -77,9 +77,4 @@ public class UserController {
         errors.put(SUCCESSFUL, FALSE);
         return errors;
     }
-
-    @GetMapping("/myOrders")
-    public String showOrdersPage() {
-        return "my-orders";
-    }
 }

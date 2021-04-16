@@ -9,12 +9,14 @@ import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycleDTO;
 import com.belikov.valteris.cycle.place.PlaceService;
 import com.belikov.valteris.cycle.user.model.UserDTO;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -107,7 +109,7 @@ public class OrderController {
         return "checkout-page";
     }
 
-    @PostMapping("/checkout")
+    @PutMapping("/checkout")
     @ResponseStatus(HttpStatus.OK)
     public void sendCheckoutInformation(@RequestBody String placeInfo, @ModelAttribute("userDTO") UserDTO userDTO) {
         JSONObject jsonObject = new JSONObject(placeInfo);
@@ -116,6 +118,35 @@ public class OrderController {
         final Optional<OrderDTO> formedOrder = orderService.findByUserDTOAndStatus(userDTO, OrderStatus.FORMED);
         formedOrder.get().setPlaceDTO(placeService.getById(placeId).get());
         orderService.save(formedOrder.get());
+    }
+
+    @PostMapping("/checkout")
+    @ResponseStatus(HttpStatus.OK)
+    public void makeCheckout(@ModelAttribute("userDTO") UserDTO userDTO) {
+        final Optional<OrderDTO> formedOrder = orderService.findByUserDTOAndStatus(userDTO, OrderStatus.FORMED);
+        formedOrder.get().setStatus(OrderStatus.PAYED);
+        orderService.save(formedOrder.get());
+        createNewOrder(userDTO);
+    }
+
+    @GetMapping("/myOrders")
+    public String showOrdersPage() {
+        return "my-orders";
+    }
+
+    @GetMapping("/order/payed/page/{pageNumber}")
+    @ResponseBody
+    public String getPayedOrders(@PathVariable int pageNumber, @ModelAttribute("userDTO") UserDTO userDTO) {
+        final Page<OrderDTO> orderPage = orderService.findPageByUserDTOAndStatus(userDTO, OrderStatus.PAYED, pageNumber);
+        final int totalPages = orderPage.getTotalPages();
+        pageNumber = checkNumberOfPage(pageNumber, totalPages);
+
+        JSONObject json = new JSONObject();
+        json.put("currentPage", pageNumber);
+        json.put("totalPages", totalPages);
+        json.put("orders", orderPage.get().collect(Collectors.toList()));
+
+        return json.toString();
     }
 
     private double countTotalPrice(List<OrderBicycleDTO> orderBicycleDTOS, List<DetailDTO> detailDTOS) {
@@ -136,6 +167,22 @@ public class OrderController {
             timeDiff -= 0.5;
         }
         return timeDiff;
+    }
+
+    public void createNewOrder(UserDTO userDTO) {
+        final OrderDTO order = new OrderDTO();
+        order.setStatus(OrderStatus.FORMED);
+        order.setUserDTO(userDTO);
+        order.setDetailDTOS(new ArrayList<>());
+        order.setPlaceDTO(placeService.getById(1L).get());
+        orderService.save(order);
+    }
+
+    private int checkNumberOfPage(int numberOfPage, int totalPages) {
+        if (numberOfPage < 1 || numberOfPage > totalPages) {
+            numberOfPage = 1;
+        }
+        return numberOfPage;
     }
 
 }

@@ -5,12 +5,18 @@ import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycle.model.SortType;
 import com.belikov.valteris.cycle.detail.DetailService;
 import com.belikov.valteris.cycle.order.OrderService;
+import com.belikov.valteris.cycle.place.PlaceService;
 import com.belikov.valteris.cycle.order.model.OrderDTO;
 import com.belikov.valteris.cycle.order.model.OrderStatus;
 import com.belikov.valteris.cycle.orderBicycle.OrderBicycleService;
 import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycleDTO;
 import com.belikov.valteris.cycle.user.UserService;
 import com.belikov.valteris.cycle.user.model.UserDTO;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +36,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Controller
 @SessionAttributes({"userDTO"})
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -45,6 +45,7 @@ public class BicycleController {
     private final UserService userService;
     private final OrderService orderService;
     private final DetailService detailService;
+    private final PlaceService placeService;
     private final OrderBicycleService orderBicycleService;
 
     // В сессии для сохранения юзера и заказов (хз как по другому мона)
@@ -168,6 +169,7 @@ public class BicycleController {
         order.setStatus(OrderStatus.FORMED);
         order.setUserDTO(userDTO);
         order.setDetailDTOS(new ArrayList<>());
+        order.setPlaceDTO(placeService.getById(1L).get());
         orderService.save(order);
     }
 

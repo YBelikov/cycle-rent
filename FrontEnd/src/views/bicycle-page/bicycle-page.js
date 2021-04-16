@@ -85,8 +85,6 @@ $("#addToBasket").click(() => {
         dataType: 'json',
         data: JSON.stringify(jsonData),
         success: function (data) {
-            console.log("reseive: ", data)
-            // showTotal(data.totalValue)
             $("#bicycleAdded").show();
             const timeout = setTimeout(() => {
                 $("#bicycleAdded").hide();
