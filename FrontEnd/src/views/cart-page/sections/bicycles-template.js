@@ -1,4 +1,5 @@
 export const getBicycleTemplate = (
+    orderBicycleId,
     timeStart,
     timeEnd,
     totalTime,
@@ -8,7 +9,7 @@ export const getBicycleTemplate = (
       price = 0,
       photo = ''
     }) =>
-    `<tr>
+    `<tr data-product-type="bicycle">
         <th scope="row" class="border-0">
             <div class="p-2">
                 <img src="/img/bicycles/${photo}" alt="${name}" width="70" class="img-fluid rounded shadow-sm">
@@ -23,6 +24,6 @@ export const getBicycleTemplate = (
         <td class="border-0 align-middle"><strong>${totalTime}h * ${price} = ${totalTime*price} UAH</strong></td>
         <td class="align-middle"></td>
         <td class="border-0 align-middle" style="text-align: center;">
-          <a href="#" class="text-dark"><i class="fa fa-trash"></i></a>
+          <i class="fa fa-trash text-dark btn-trash" data-action="/orderBicycle/delete/${orderBicycleId}"></i>
         </td>
     </tr>`;

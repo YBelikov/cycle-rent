@@ -1,7 +1,7 @@
 package com.belikov.valteris.cycle.order.model;
 
 import com.belikov.valteris.cycle.detail.model.DetailDTO;
-import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycleDTO;
+import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycleDTO;
 import com.belikov.valteris.cycle.place.model.PlaceDTO;
 import com.belikov.valteris.cycle.user.model.UserDTO;
 import java.util.ArrayList;

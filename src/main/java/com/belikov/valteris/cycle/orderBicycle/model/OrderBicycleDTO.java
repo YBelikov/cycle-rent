@@ -1,4 +1,4 @@
-package com.belikov.valteris.cycle.order_bicycle.model;
+package com.belikov.valteris.cycle.orderBicycle.model;
 
 import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.order.model.OrderDTO;

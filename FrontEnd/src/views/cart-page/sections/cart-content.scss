@@ -6,6 +6,24 @@
       box-shadow: 0 0 9px 1px #131619de;
       margin-top: 8%;
       margin-bottom: 20px;
+
+      .quantity {
+        text-align: center;
+
+        h5 {
+          display: inline;
+          padding: 0 5px 0 5px;
+          vertical-align: middle;
+        }
+
+        a {
+          width: 30%;
+        }
+      }
+
+      .btn-trash {
+        cursor: pointer;
+      }
     }
   }
 }

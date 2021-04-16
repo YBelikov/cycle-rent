@@ -1,12 +1,12 @@
-package com.belikov.valteris.cycle.order_bicycle.impl;
+package com.belikov.valteris.cycle.orderBicycle.impl;
 
 import com.belikov.valteris.cycle.config.Mapper;
 import com.belikov.valteris.cycle.order.model.Order;
 import com.belikov.valteris.cycle.order.model.OrderDTO;
-import com.belikov.valteris.cycle.order_bicycle.OrderBicycleRepository;
-import com.belikov.valteris.cycle.order_bicycle.OrderBicycleService;
-import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycle;
-import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycleDTO;
+import com.belikov.valteris.cycle.orderBicycle.OrderBicycleRepository;
+import com.belikov.valteris.cycle.orderBicycle.OrderBicycleService;
+import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycle;
+import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycleDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

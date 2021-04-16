@@ -14,3 +14,11 @@ import 'bootstrap';
 // // import 'bootstrap/js/src/toast';
 // // import 'bootstrap/js/src/tooltip';
 // // import 'bootstrap/js/src/util';
+
+window.addEventListener('load', function () {
+  $.get("/order/formed", function (data) {
+    data = JSON.parse(data);
+    console.log(data)
+  })
+})
+

@@ -1,16 +1,9 @@
 <div class="checkout-area row py-5 p-4 bg-white rounded">
   <div class="col-lg-6">
     <div class="bg-light px-4 py-3 text-uppercase font-weight-bold">Choose pick up place:</div>
-    <div class="dropdown pt-2">
-      <button
-          class="px-4 py-3 text-uppercase btn btn-outline-dark btn-block dropdown-toggle"
-          type="button" id="placeDropdown" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
-        [Choose pick up place]
-      </button>
-      <div id="forPlaces" class="dropdown-menu place-dropdown" aria-labelledby="placeDropdown">
-      </div>
-    </div>
+    <select class="mt-2 custom-select text-uppercase" id="forPlaces">
+      <option selected value="0">[Choose pick up place]</option>
+    </select>
   </div>
   <div class="col-lg-6">
     <div class="bg-light px-4 py-3 text-uppercase font-weight-bold">Order summary</div>
@@ -18,11 +11,12 @@
       <ul class="list-unstyled mb-4">
         <li class="d-flex justify-content-between py-3 border-bottom"><strong
             class="text-muted">Total</strong>
-          <h5 class="font-weight-bold">390.00 UAH</h5>
+          <h5 class="font-weight-bold"><span id="total-price"></span> UAH</h5>
         </li>
       </ul>
-      <a th:href="@{/checkout}" class="btn btn-dark py-2 btn-block">Procceed to
-        checkout</a>
+      <button class="btn btn-dark py-2 btn-block disabled" id="btn-checkout">
+        Proceed to checkout
+      </button>
       <a th:href="@{/bicycles}" class="btn btn-dark py-2 btn-block">Return to list</a>
     </div>
   </div>

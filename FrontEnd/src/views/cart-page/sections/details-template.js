@@ -5,7 +5,7 @@ export const getDetailsTemplate = (
       price = 0,
       photo = ''
     }, numberOfItems) =>
-    `<tr>
+    `<tr data-product-type="details">
         <th scope="row" class="border-0">
             <div class="p-2">
                 <img src="/img/details/${photo}" alt="${name}" width="70" class="img-fluid rounded shadow-sm">
@@ -18,9 +18,12 @@ export const getDetailsTemplate = (
         <td class="border-0 align-middle">
           <strong>${price} * ${numberOfItems} = ${numberOfItems * price} UAH</strong>
         </td>
-        <td class="align-middle">
-          <input type="number" class="form-control quantity-input" value="${numberOfItems}" style="width: 80px"/>
+        <td class="align-middle quantity">
+          <button data-action="/detail/remove/${id}" class="btn btn-outline-dark">—</button>
+          <h5>${numberOfItems}</h5>
+          <button data-action="/detail/add/${id}" class="btn btn-outline-dark">+</button>
         </td>
-        <td class="border-0 align-middle" style="text-align: center;"><a href="#" class="text-dark">
-        <i class="fa fa-trash"></i></a></td>
+        <td class="border-0 align-middle" style="text-align: center;">
+          <i class="fa fa-trash text-dark btn-trash" data-action="/detail/all/delete/${id}"></i>
+        </td>
     </tr>`;

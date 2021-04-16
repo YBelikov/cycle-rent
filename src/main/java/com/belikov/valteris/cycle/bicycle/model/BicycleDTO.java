@@ -1,7 +1,7 @@
 package com.belikov.valteris.cycle.bicycle.model;
 
 import com.belikov.valteris.cycle.detail.model.DetailDTO;
-import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycleDTO;
+import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycleDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

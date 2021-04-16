@@ -1,7 +1,7 @@
-package com.belikov.valteris.cycle.order_bicycle;
+package com.belikov.valteris.cycle.orderBicycle;
 
 import com.belikov.valteris.cycle.order.model.Order;
-import com.belikov.valteris.cycle.order_bicycle.model.OrderBicycle;
+import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycle;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

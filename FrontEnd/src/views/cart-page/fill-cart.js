@@ -5,8 +5,8 @@ export function fillOrderBicycles(bicycles) {
   let bicyclesHtml = '';
   bicycles.forEach(bicycle => {
     let totalTime = timeNumber(bicycle.timeEnd) - timeNumber(bicycle.timeStart)
-    bicyclesHtml += getBicycleTemplate(bicycle.timeStart, bicycle.timeEnd,
-        totalTime, bicycle.bicycleDTO)
+    bicyclesHtml += getBicycleTemplate(bicycle.id, bicycle.timeStart,
+        bicycle.timeEnd, totalTime, bicycle.bicycleDTO)
   })
   document.getElementById('fillCart').innerHTML = bicyclesHtml;
 }
