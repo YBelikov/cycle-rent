@@ -10,7 +10,9 @@ import com.belikov.valteris.cycle.place.PlaceService;
 import com.belikov.valteris.cycle.user.model.UserDTO;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -141,10 +143,22 @@ public class OrderController {
         final int totalPages = orderPage.getTotalPages();
         pageNumber = checkNumberOfPage(pageNumber, totalPages);
 
+        List<OrderDTO> orderDTOS = orderPage.get().collect(Collectors.toList());
+        Map<Long, List<OrderBicycleDTO>> orderBicycleDTOMap = new LinkedHashMap<>();
+        Map<Long, Double> priceMap = new LinkedHashMap<>();
+
+        for (OrderDTO order : orderDTOS) {
+            List<OrderBicycleDTO> bicycleDTOS = orderBicycleService.findAllByOrder(order);
+            orderBicycleDTOMap.put(order.getId(), bicycleDTOS);
+            priceMap.put(order.getId(), countTotalPrice(bicycleDTOS, order.getDetailDTOS()));
+        }
+
         JSONObject json = new JSONObject();
         json.put("currentPage", pageNumber);
         json.put("totalPages", totalPages);
-        json.put("orders", orderPage.get().collect(Collectors.toList()));
+        json.put("orders", orderDTOS);
+        json.put("orderBicycleMap", orderBicycleDTOMap);
+        json.put("priceMap", priceMap);
 
         return json.toString();
     }

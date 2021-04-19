@@ -76,7 +76,7 @@ export function navActions() {
 
 $(document).ready(function () {
     const delay = 500, // ms
-        minChars = 3;
+        minChars = 1;
     let timeout;
     $("#searchBox").keyup(function () {
         const query = $("#searchBox").val();

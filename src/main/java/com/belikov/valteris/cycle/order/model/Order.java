@@ -4,6 +4,7 @@ import com.belikov.valteris.cycle.detail.model.Detail;
 import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycle;
 import com.belikov.valteris.cycle.place.model.Place;
 import com.belikov.valteris.cycle.user.model.User;
+import javax.persistence.FetchType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

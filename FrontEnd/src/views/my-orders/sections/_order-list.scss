@@ -40,7 +40,7 @@
       }
     }
 
-    .order-dish-items {
+    .order-bicycle-items {
       font-size: 15px;
       font-weight: normal;
       vertical-align: text-top;
@@ -55,7 +55,6 @@
       transition-duration: 0.2s;
     }
 
-    //todo
     a[aria-expanded=true] .double-arrow {
       transform: rotate(90deg);
     }
@@ -91,7 +90,7 @@
         }
       }
 
-      .dish-name {
+      .bicycle-name {
         display: block;
         color: #777;
       }
