@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for Linux (x86_64)
 --
 -- Host: localhost    Database: bicycle_rent
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.23-0ubuntu0.20.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS `bicycle_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bicycle_detail` (
-  `bicycle_id` bigint(20) NOT NULL,
-  `detail_id` bigint(20) NOT NULL,
+  `bicycle_id` bigint NOT NULL,
+  `detail_id` bigint NOT NULL,
   KEY `FK6h0upmlwsddi0hbqaib7ankpq` (`detail_id`),
   KEY `FKl1e88yn5mqu0uyi3blqhtc3oq` (`bicycle_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -48,11 +48,11 @@ DROP TABLE IF EXISTS `bicycles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bicycles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `type` varchar(45) NOT NULL,
   `weight` double NOT NULL DEFAULT '0',
-  `num_of_speeds` int(11) NOT NULL,
+  `num_of_speeds` int NOT NULL,
   `price` double NOT NULL,
   `photo` longtext NOT NULL,
   `description` longtext NOT NULL,
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `details` (
-  `id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` longtext NOT NULL,
   `photo` longtext NOT NULL,
@@ -105,13 +105,16 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `status` varchar(45) NOT NULL,
-  `user_id` bigint(19) NOT NULL,
+  `user_id` bigint NOT NULL,
+  `place_id` bigint DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
+  KEY `FKoq6pbd7um89xccacm0xsk0xjx` (`place_id`),
+  CONSTRAINT `FKoq6pbd7um89xccacm0xsk0xjx` FOREIGN KEY (`place_id`) REFERENCES `places` (`id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +123,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'FORMED',1);
+INSERT INTO `orders` VALUES (1,'PAYED',1,3),(4,'PAYED',1,5),(7,'PAYED',1,5),(10,'PAYED',1,1),(13,'PAYED',3,3),(15,'FORMED',3,1),(17,'PAYED',1,1),(18,'PAYED',1,5),(21,'PAYED',1,2),(22,'FORMED',1,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,13 +135,17 @@ DROP TABLE IF EXISTS `orders_bicycles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders_bicycles` (
-  `id` bigint(19) NOT NULL AUTO_INCREMENT,
-  `order_id` mediumtext NOT NULL,
-  `bicycle_id` mediumtext NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `order_id` bigint NOT NULL,
+  `bicycle_id` bigint NOT NULL,
   `time_start` time NOT NULL,
   `time_end` time NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  KEY `FKqdonmh71n7wrmqj2hpjf5rpvn` (`order_id`),
+  KEY `FKoby5hghb1djk4vkbbn2fm8r4p` (`bicycle_id`),
+  CONSTRAINT `FKoby5hghb1djk4vkbbn2fm8r4p` FOREIGN KEY (`bicycle_id`) REFERENCES `bicycles` (`id`),
+  CONSTRAINT `FKqdonmh71n7wrmqj2hpjf5rpvn` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +154,7 @@ CREATE TABLE `orders_bicycles` (
 
 LOCK TABLES `orders_bicycles` WRITE;
 /*!40000 ALTER TABLE `orders_bicycles` DISABLE KEYS */;
-INSERT INTO `orders_bicycles` VALUES (1,'1','5','07:00:00','08:30:00'),(2,'1','5','07:00:00','08:00:00'),(3,'1','4','07:00:00','08:30:00'),(4,'1','2','07:00:00','11:00:00'),(5,'1','4','10:00:00','14:00:00');
+INSERT INTO `orders_bicycles` VALUES (21,1,4,'02:30:00','10:00:00'),(22,4,5,'15:00:00','17:30:00'),(23,7,4,'10:00:00','11:00:00'),(24,7,4,'10:00:00','11:00:00'),(25,10,1,'02:00:00','03:00:00'),(26,13,5,'00:00:00','03:00:00'),(27,15,4,'10:00:00','12:00:00'),(28,17,2,'10:00:00','11:00:00'),(29,18,3,'10:00:00','11:30:00'),(30,21,4,'10:00:00','11:30:00'),(31,21,4,'10:00:00','11:30:00'),(32,21,1,'10:00:00','11:30:00');
 /*!40000 ALTER TABLE `orders_bicycles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,8 +166,8 @@ DROP TABLE IF EXISTS `orders_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders_details` (
-  `order_id` bigint(20) NOT NULL,
-  `detail_id` bigint(20) NOT NULL,
+  `order_id` bigint NOT NULL,
+  `detail_id` bigint NOT NULL,
   KEY `FKm70kqyc6841y8vbjm6gjdljrr` (`detail_id`),
   KEY `FK5o977kj2vptwo70fu7w7so9fe` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -172,7 +179,7 @@ CREATE TABLE `orders_details` (
 
 LOCK TABLES `orders_details` WRITE;
 /*!40000 ALTER TABLE `orders_details` DISABLE KEYS */;
-INSERT INTO `orders_details` VALUES (1,4),(1,3),(1,3),(1,4);
+INSERT INTO `orders_details` VALUES (1,4),(1,3),(1,4),(4,3),(7,1),(13,4),(18,4);
 /*!40000 ALTER TABLE `orders_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +191,7 @@ DROP TABLE IF EXISTS `places`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `places` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `place` longtext NOT NULL,
   `lat` double NOT NULL,
   `len` double NOT NULL,
@@ -198,8 +205,32 @@ CREATE TABLE `places` (
 
 LOCK TABLES `places` WRITE;
 /*!40000 ALTER TABLE `places` DISABLE KEYS */;
-INSERT INTO `places` VALUES (1,'Деміївська метро',50.404792,30.516738),(2,'Васильківська метро',50.393328,30.488286),(3,'ФКНК',50.383371,30.471322),(4,'Палац спорту метро',50.439643,30.519582),(5,'Парк Тараса Шевченка',50.441773,30.512751),(6,'Поштова площа метро',50.45922,30.524306);
+INSERT INTO `places` VALUES (1,'Деміївська метро',50.404792,30.516738),(2,'Васильківська метро',50.393328,30.488286),(3,'ФКНК',50.383371,30.471322),(5,'Парк Тараса Шевченка',50.441773,30.512751);
 /*!40000 ALTER TABLE `places` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `places_orders`
+--
+
+DROP TABLE IF EXISTS `places_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `places_orders` (
+  `place_id` bigint NOT NULL,
+  `orders_id` bigint NOT NULL,
+  UNIQUE KEY `UK_2yjsti9aqwmdkufhl656xw6j9` (`orders_id`),
+  KEY `FKe9nqosiarss505wr1vvq2uf48` (`place_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `places_orders`
+--
+
+LOCK TABLES `places_orders` WRITE;
+/*!40000 ALTER TABLE `places_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `places_orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -210,14 +241,14 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` longtext NOT NULL,
   `role` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_username_uindex` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +257,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Lizon','lizon@gmail.com','$2a$10$nZcEI958eTdXnu4PsW8J7.oVKq1G6dVEP975GSUmHg03.KLfUd8.a','USER'),(2,'Валера','valera11@gmail.com','$2a$10$og4YxGg3VXMD4otFstFzI.gkLYLr8y3YoZ6pqq26QKdPh5/CoHfC6','USER');
+INSERT INTO `users` VALUES (1,'Lizon','lizon@gmail.com','$2a$10$nZcEI958eTdXnu4PsW8J7.oVKq1G6dVEP975GSUmHg03.KLfUd8.a','USER'),(2,'Валера','valera11@gmail.com','$2a$10$og4YxGg3VXMD4otFstFzI.gkLYLr8y3YoZ6pqq26QKdPh5/CoHfC6','USER'),(3,'Sanya','sanya@gmail.com','$2a$10$OHztFv9ipcwK38EGxyHcZeX/T35UYp4PxCWdHfqsWv5Cyc4h9qcmG','USER');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -239,4 +270,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-09 17:57:20
+-- Dump completed on 2021-04-19 18:51:08
