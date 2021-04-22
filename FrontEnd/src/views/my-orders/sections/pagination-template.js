@@ -1,6 +1,6 @@
 export const getPaginationTemplate =
-  (totalPages = 1, currentPage = 1) =>
-    `<nav>
+    (totalPages = 1, currentPage = 1) =>
+        `<nav>
   <ul class="pagination pagination-lg justify-content-center my-pagination">
     <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
       <div id="previousButton" class="page-link">Previous</div>

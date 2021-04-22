@@ -61,14 +61,16 @@ export function navActions() {
     $('#previousButton').click(() => {
         if (pageNumber > 1) {
             pageNumber--;
-            const url = "/bicycles/all/sort/" + sortBy + "/type/" + bicycleType + "/page/" + pageNumber;
+            const url = "/bicycles/all/sort/" + sortBy + "/type/" + bicycleType
+                + "/page/" + pageNumber;
             console.log("previous", url);
             getBicyclesFromServer(url);
         }
     })
     $('#nextButton').click(() => {
         pageNumber++;
-        const url = "/bicycles/all/sort/" + sortBy + "/type/" + bicycleType + "/page/" + pageNumber;
+        const url = "/bicycles/all/sort/" + sortBy + "/type/" + bicycleType
+            + "/page/" + pageNumber;
         console.log("next", url);
         getBicyclesFromServer(url);
     })

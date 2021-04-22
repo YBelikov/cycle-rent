@@ -139,7 +139,8 @@ public class OrderController {
     @GetMapping("/order/payed/page/{pageNumber}")
     @ResponseBody
     public String getPayedOrders(@PathVariable int pageNumber, @ModelAttribute("userDTO") UserDTO userDTO) {
-        final Page<OrderDTO> orderPage = orderService.findPageByUserDTOAndStatus(userDTO, OrderStatus.PAYED, pageNumber);
+        final Page<OrderDTO> orderPage = orderService
+            .findPageByUserDTOAndStatus(userDTO, OrderStatus.PAYED, pageNumber);
         final int totalPages = orderPage.getTotalPages();
         pageNumber = checkNumberOfPage(pageNumber, totalPages);
 
@@ -198,5 +199,4 @@ public class OrderController {
         }
         return numberOfPage;
     }
-
 }

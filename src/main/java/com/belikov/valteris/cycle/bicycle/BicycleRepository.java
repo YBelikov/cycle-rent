@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BicycleRepository extends JpaRepository<Bicycle, Long> {
+
     Page<Bicycle> findAllByType(String bicycleType, Pageable pageable);
+
     Page<Bicycle> findAllByNameLikeOrderByName(String name, Pageable pageable);
 }

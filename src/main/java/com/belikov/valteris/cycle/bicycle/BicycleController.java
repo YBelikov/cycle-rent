@@ -5,11 +5,11 @@ import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycle.model.SortType;
 import com.belikov.valteris.cycle.detail.DetailService;
 import com.belikov.valteris.cycle.order.OrderService;
-import com.belikov.valteris.cycle.place.PlaceService;
 import com.belikov.valteris.cycle.order.model.OrderDTO;
 import com.belikov.valteris.cycle.order.model.OrderStatus;
 import com.belikov.valteris.cycle.orderBicycle.OrderBicycleService;
 import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycleDTO;
+import com.belikov.valteris.cycle.place.PlaceService;
 import com.belikov.valteris.cycle.user.UserService;
 import com.belikov.valteris.cycle.user.model.UserDTO;
 import java.time.LocalTime;
@@ -48,7 +48,6 @@ public class BicycleController {
     private final PlaceService placeService;
     private final OrderBicycleService orderBicycleService;
 
-    // В сессии для сохранения юзера и заказов (хз как по другому мона)
     @ModelAttribute(name = "userDTO")
     public UserDTO userDTO() {
         return new UserDTO();
@@ -62,7 +61,6 @@ public class BicycleController {
         }
 
         model.addAttribute("userDTO", userDTO);
-//        attributes.addFlashAttribute("userDTO", userDTO);
         return "index";
     }
 
@@ -83,7 +81,7 @@ public class BicycleController {
     public String getSortedPageOfBicycles(@PathVariable String typeOfSort,
                                           @PathVariable String bicycleType, @PathVariable int numberOfPage) {
         final Page<BicycleDTO> bicyclePage = bicycleService.findSortedPage(SortType.valueOf(typeOfSort),
-                BicycleType.valueOf(bicycleType), numberOfPage);
+            BicycleType.valueOf(bicycleType), numberOfPage);
         final int totalPages = bicyclePage.getTotalPages();
         numberOfPage = checkNumberOfPage(numberOfPage, totalPages);
 
@@ -174,7 +172,7 @@ public class BicycleController {
     }
 
     private void saveOrderBicycleDTO(JSONObject jsonData, Optional<BicycleDTO> bicycleDTO,
-                                                Optional<OrderDTO> formedOrder) {
+                                     Optional<OrderDTO> formedOrder) {
         final OrderBicycleDTO orderBicycleDTO = new OrderBicycleDTO();
         formedOrder.ifPresent(orderBicycleDTO::setOrderDTO);
         bicycleDTO.ifPresent(orderBicycleDTO::setBicycleDTO);

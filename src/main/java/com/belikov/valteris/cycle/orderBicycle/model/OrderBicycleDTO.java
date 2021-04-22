@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 public class OrderBicycleDTO {
+
     private Long id;
     private OrderDTO orderDTO;
     private BicycleDTO bicycleDTO;

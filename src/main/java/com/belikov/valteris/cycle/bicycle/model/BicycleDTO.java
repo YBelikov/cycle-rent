@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class BicycleDTO {
+
     private Long id;
     private String name;
     private String type;

@@ -21,7 +21,8 @@ export const getBicycleTemplate = (
                 </div>
             </div>
         </th>
-        <td class="border-0 align-middle"><strong>${totalTime}h * ${price} = ${totalTime*price} UAH</strong></td>
+        <td class="border-0 align-middle"><strong>${totalTime}h * ${price} = ${totalTime
+    * price} UAH</strong></td>
         <td class="align-middle"></td>
         <td class="border-0 align-middle" style="text-align: center;">
           <i class="fa fa-trash text-dark btn-trash" data-action="/orderBicycle/delete/${orderBicycleId}"></i>

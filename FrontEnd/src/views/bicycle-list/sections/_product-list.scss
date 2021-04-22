@@ -1,6 +1,6 @@
 // Styling for the team section
 .bike-list {
-  .card a{
+  .card a {
     @include media-breakpoint-up(xs) {
       height: auto;
     }
@@ -18,19 +18,20 @@
   .card-body {
     border-top: 3px solid #eaeaeabf;
   }
+
   a {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
     text-decoration: none;
     color: #6b6b6b;
     height: 500px;
-    transition: all .5s cubic-bezier(.25,.8,.25,1);
+    transition: all .5s cubic-bezier(.25, .8, .25, 1);
 
-    h5{
+    h5 {
       color: black;
     }
 
     &:hover {
-      box-shadow: 0 3px 5px -1px rgba(0,0,0,.12), 0 6px 10px 0 rgba(0,0,0,.12), 0 1px 18px 0 rgba(0,0,0,.12);
+      box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .12), 0 6px 10px 0 rgba(0, 0, 0, .12), 0 1px 18px 0 rgba(0, 0, 0, .12);
       transform: translate(7px, -7px);
     }
   }
@@ -62,6 +63,7 @@
     position: relative;
     list-style-type: none;
   }
+
   em {
     color: #05a081;
   }

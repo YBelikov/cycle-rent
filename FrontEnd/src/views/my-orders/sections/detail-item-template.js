@@ -1,9 +1,9 @@
 export const getDetailItemTemplate =
     ({
-        id = 0,
-        name = '',
-        photo = '',
-        price = 0
+      id = 0,
+      name = '',
+      photo = '',
+      price = 0
     }, quantity) =>
         `<div class="info-list-item">
           <div class="bicycle-name">

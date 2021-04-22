@@ -8,7 +8,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const autoprefixer = require('autoprefixer');
 const CopyPlugin = require('copy-webpack-plugin');
 
-
 const isProd = process.env.NODE_ENV === 'production';
 // const hash6 = '.[hash:6]';
 const hash6 = '';
@@ -27,7 +26,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../src/main/resources/static/'),
-    filename: 'js/[name]'+hash6+'.js',
+    filename: 'js/[name]' + hash6 + '.js',
     publicPath: '/'
   },
 
@@ -62,7 +61,7 @@ module.exports = {
         assetNameRegExp: /\.css$/g,
         cssProcessor: require('cssnano'),
         cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }],
+          preset: ['default', {discardComments: {removeAll: true}}],
         },
         canPrint: true
       }),
@@ -95,16 +94,16 @@ module.exports = {
               preprocessor: (content, loaderContext) => {
                 const replacer = (content, loaderContextPath) => {
                   return content.replace(
-                    // replace <include src="..." /> tag
-                    /<include src="(.+)"\s*\/?>(?:<\/include>)?/gi,
-                    (inc, src) => {
-                      const filePath = path.resolve(loaderContextPath, src)
-                      loaderContext.dependency(filePath)
-                      return replacer(
-                        fs.readFileSync(filePath, 'utf8'),
-                        path.dirname(filePath)
-                      )
-                    }
+                      // replace <include src="..." /> tag
+                      /<include src="(.+)"\s*\/?>(?:<\/include>)?/gi,
+                      (inc, src) => {
+                        const filePath = path.resolve(loaderContextPath, src)
+                        loaderContext.dependency(filePath)
+                        return replacer(
+                            fs.readFileSync(filePath, 'utf8'),
+                            path.dirname(filePath)
+                        )
+                      }
                   )
                 }
                 return replacer(content, path.resolve(loaderContext.context))
@@ -152,7 +151,7 @@ module.exports = {
         // exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          name: '[name]'+hash6+'.[ext]',
+          name: '[name]' + hash6 + '.[ext]',
           outputPath: '../static/img',
           publicPath: '/img'
         }
@@ -161,17 +160,14 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf)$/,
         loader: 'file-loader',
-          options: {
-            outputPath: '../static/fonts',
-            publicPath: '/fonts'
-          }
+        options: {
+          outputPath: '../static/fonts',
+          publicPath: '/fonts'
+        }
       }
     ]
   },
   plugins: [
-
-
-
 
     new CopyPlugin({
       patterns: [
@@ -185,7 +181,8 @@ module.exports = {
         },
         {
           from: path.join(__dirname, './assets/images/logos/icon.png'),
-          to: path.join(__dirname, '../src/main/resources/static/img/favicon.png')
+          to: path.join(__dirname,
+              '../src/main/resources/static/img/favicon.png')
         },
       ],
     }),
@@ -193,7 +190,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'css/[name]'+hash6+'.css',
+      filename: 'css/[name]' + hash6 + '.css',
     }),
 
     new webpack.ProvidePlugin({
@@ -232,7 +229,7 @@ module.exports = {
       chunks: ['vendors', 'signUp']
     }),
 
-    new HtmlWebpackPlugin ({
+    new HtmlWebpackPlugin({
       filename: '../templates/bicycle-page.html',
       template: './src/views/bicycle-page/bicycle-page.html',
       chunks: ['vendors', 'bicyclePage']

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"user", "inBasket"})
+@SessionAttributes({"user"})
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PlaceController {
 

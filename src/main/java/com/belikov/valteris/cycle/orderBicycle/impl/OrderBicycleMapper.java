@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class OrderBicycleMapper implements Mapper<OrderBicycleDTO, OrderBicycle> {
+
     private final OrderMapper orderMapper;
     private final BicycleMapper bicycleMapper;
 

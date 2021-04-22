@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper implements Mapper<UserDTO, User> {
+
     @Override
     public UserDTO mapEntityToDomain(User entity) {
         if (entity == null) {

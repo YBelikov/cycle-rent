@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BicycleService {
+
     List<BicycleDTO> getAll();
 
     Optional<BicycleDTO> getById(Long id);

@@ -1,10 +1,10 @@
 export const getDetailsTemplate =
     ({
-         id = '',
-         name = '',
-         price = 0,
-         photo = '',
-         description = ''
+      id = '',
+      name = '',
+      price = 0,
+      photo = '',
+      description = ''
     }) =>
         `<li class="list-group-item">
             <div class="detail-row media align-items-lg-center flex-column flex-lg-row">

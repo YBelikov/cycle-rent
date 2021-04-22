@@ -1,7 +1,7 @@
 export const getOrderTemplate =
     ({
-        id = 0,
-        placeDTO = ''
+      id = 0,
+      placeDTO = ''
     }, totalPrice) =>
         `<div>
       <div class="row">

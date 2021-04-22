@@ -30,7 +30,7 @@ public class BicycleServiceImpl implements BicycleService {
     @Override
     public List<BicycleDTO> getAll() {
         return bicycleRepository.findAll().stream()
-                .map(bicycleMapper::mapEntityToDomain).collect(Collectors.toList());
+            .map(bicycleMapper::mapEntityToDomain).collect(Collectors.toList());
     }
 
     @Override
@@ -65,13 +65,13 @@ public class BicycleServiceImpl implements BicycleService {
             return bicycleRepository.findAll(bicyclePage).map(bicycleMapper::mapEntityToDomain);
         }
         return bicycleRepository.findAllByType(bicycleType.getStringType(), bicyclePage)
-                .map(bicycleMapper::mapEntityToDomain);
+            .map(bicycleMapper::mapEntityToDomain);
     }
 
     @Override
     public Page<BicycleDTO> getBicyclesLike(String example) {
         Pageable bicyclePage = PageRequest.of(0, ITEMS_PER_PAGE);
         return bicycleRepository.findAllByNameLikeOrderByName("%" + example + "%", bicyclePage)
-                .map(bicycleMapper::mapEntityToDomain);
+            .map(bicycleMapper::mapEntityToDomain);
     }
 }

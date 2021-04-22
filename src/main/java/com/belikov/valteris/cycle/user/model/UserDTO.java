@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @Setter
 @NoArgsConstructor
 public class UserDTO {
+
     private Long id;
 
     @NotBlank(message = "Username is required!")

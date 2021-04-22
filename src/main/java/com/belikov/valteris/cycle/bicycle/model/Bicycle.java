@@ -26,6 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "bicycles")
 public class Bicycle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -57,8 +58,8 @@ public class Bicycle {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "bicycle_detail",
-            joinColumns = @JoinColumn(name = "bicycle_id"),
-            inverseJoinColumns = @JoinColumn(name = "detail_id")
+        joinColumns = @JoinColumn(name = "bicycle_id"),
+        inverseJoinColumns = @JoinColumn(name = "detail_id")
     )
     @JsonIgnoreProperties("bicycles")
     private List<Detail> details;

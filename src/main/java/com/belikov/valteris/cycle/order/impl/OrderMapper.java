@@ -31,7 +31,7 @@ public class OrderMapper implements Mapper<OrderDTO, Order> {
         orderDTO.setUserDTO(userMapper.mapEntityToDomain(entity.getUser()));
         orderDTO.setPlaceDTO(placeMapper.mapEntityToDomain(entity.getPlace()));
         orderDTO.setDetailDTOS(entity.getDetails().stream()
-                .map(detailMapper::mapEntityToDomain).collect(Collectors.toList()));
+            .map(detailMapper::mapEntityToDomain).collect(Collectors.toList()));
         return orderDTO;
     }
 
@@ -46,7 +46,7 @@ public class OrderMapper implements Mapper<OrderDTO, Order> {
         order.setUser(userMapper.mapDomainToEntity(domain.getUserDTO()));
         order.setPlace(placeMapper.mapDomainToEntity(domain.getPlaceDTO()));
         order.setDetails(domain.getDetailDTOS().stream()
-                .map(detailMapper::mapDomainToEntity).collect(Collectors.toList()));
+            .map(detailMapper::mapDomainToEntity).collect(Collectors.toList()));
         return order;
     }
 }

@@ -1,14 +1,14 @@
 export const getBicycleTemplate =
     ({
-         id = '',
-         name = '',
-         type = '',
-         weight = 0,
-         price = 0,
-         numOfSpeeds = 0,
-         photo = '',
-         description = ''
-     }) =>
+      id = '',
+      name = '',
+      type = '',
+      weight = 0,
+      price = 0,
+      numOfSpeeds = 0,
+      photo = '',
+      description = ''
+    }) =>
         `<div class="col mb-4">
         <div class="card h-100 border-my">
           <a href="bicycle/${id}" class="h-100">

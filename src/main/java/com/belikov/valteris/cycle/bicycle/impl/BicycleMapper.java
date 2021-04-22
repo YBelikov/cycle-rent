@@ -31,7 +31,7 @@ public class BicycleMapper implements Mapper<BicycleDTO, Bicycle> {
         bicycleDTO.setPhoto(entity.getPhoto());
         bicycleDTO.setDescription(entity.getDescription());
         bicycleDTO.setDetailDTOS(entity.getDetails().stream()
-                .map(detailMapper::mapEntityToDomain).collect(Collectors.toList()));
+            .map(detailMapper::mapEntityToDomain).collect(Collectors.toList()));
         return bicycleDTO;
     }
 
@@ -50,7 +50,7 @@ public class BicycleMapper implements Mapper<BicycleDTO, Bicycle> {
         bicycle.setPhoto(domain.getPhoto());
         bicycle.setDescription(domain.getDescription());
         bicycle.setDetails(domain.getDetailDTOS().stream()
-                .map(detailMapper::mapDomainToEntity).collect(Collectors.toList()));
+            .map(detailMapper::mapDomainToEntity).collect(Collectors.toList()));
         return bicycle;
     }
 }

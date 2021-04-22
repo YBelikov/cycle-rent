@@ -1,8 +1,8 @@
 export const getOrderBicycleTemplate =
     ({
-        timeStart = '',
-        timeEnd = '',
-        bicycleDTO = {}
+      timeStart = '',
+      timeEnd = '',
+      bicycleDTO = {}
     }, totalTime) =>
         `<div class="info-list-item">
           <a class="bicycle-name" href="/bicycle/${bicycleDTO.id}">
@@ -15,6 +15,7 @@ export const getOrderBicycleTemplate =
             Price:
             <span class="info-list__item-price__items">${totalTime} h</span> x
             <span class="info-list__item-price__cost">${bicycleDTO.price} UAH</span> =
-            <span class="info-list__item-price__cost">${totalTime * bicycleDTO.price}</span>
+            <span class="info-list__item-price__cost">${totalTime
+        * bicycleDTO.price}</span>
           </div>
         </div>`;

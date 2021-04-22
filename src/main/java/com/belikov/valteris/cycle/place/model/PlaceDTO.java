@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PlaceDTO {
+
     private Long id;
     private String place;
     private double lat;

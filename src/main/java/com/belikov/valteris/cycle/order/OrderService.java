@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 
 public interface OrderService {
+
     void save(OrderDTO newOrder);
 
     List<OrderDTO> getAll();

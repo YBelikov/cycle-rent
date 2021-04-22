@@ -10,10 +10,12 @@
     .page-link {
       color: $ocean;
     }
+
     &.disabled .page-link {
       color: #6b6b6b;
     }
   }
+
   #nextButton, #previousButton {
     cursor: pointer;
   }

@@ -14,7 +14,7 @@ public enum SortType {
 
     public static SortType findSortTypeByDescription(String description) {
         for (SortType sortType : SortType.values()) {
-            if(sortType.description.equals(description)) {
+            if (sortType.description.equals(description)) {
                 return sortType;
             }
         }

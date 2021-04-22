@@ -21,6 +21,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Table(name = "orders_bicycles")
 public class OrderBicycle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

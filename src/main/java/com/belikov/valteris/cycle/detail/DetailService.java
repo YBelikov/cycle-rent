@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DetailService {
+
     void save(DetailDTO newDetail);
 
     List<DetailDTO> getAll();

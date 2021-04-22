@@ -24,6 +24,7 @@ import java.util.Optional;
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
+
     public static final String SUCCESSFUL = "successful";
     public static final String FALSE = "false";
 

@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAll() {
         return userRepository.findAll().stream()
-                .map(userMapper::mapEntityToDomain).collect(Collectors.toList());
+            .map(userMapper::mapEntityToDomain).collect(Collectors.toList());
     }
 
     @Override
@@ -72,10 +72,11 @@ public class UserServiceImpl implements UserService {
         final String password = (String) authentication.getCredentials();
 
         User userEntity = userRepository.findByUsername(username)
-                .orElseThrow(() -> new BadCredentialsException("Incorrect email or password!"));
+            .orElseThrow(() -> new BadCredentialsException("Incorrect email or password!"));
 
         if (encoder.matches(password, userEntity.getPassword())) {
-            return new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword(), getAuthorities(userEntity));
+            return new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword(),
+                getAuthorities(userEntity));
         }
         throw new BadCredentialsException("Incorrect email or password!");
     }

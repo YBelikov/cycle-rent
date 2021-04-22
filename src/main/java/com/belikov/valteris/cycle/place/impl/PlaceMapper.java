@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class PlaceMapper implements Mapper<PlaceDTO, Place>  {
+public class PlaceMapper implements Mapper<PlaceDTO, Place> {
 
     @Override
     public PlaceDTO mapEntityToDomain(Place entity) {

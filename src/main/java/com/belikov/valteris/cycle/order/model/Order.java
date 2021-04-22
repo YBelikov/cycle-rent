@@ -4,11 +4,7 @@ import com.belikov.valteris.cycle.detail.model.Detail;
 import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycle;
 import com.belikov.valteris.cycle.place.model.Place;
 import com.belikov.valteris.cycle.user.model.User;
-import javax.persistence.FetchType;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,7 +18,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -30,6 +28,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -52,8 +51,8 @@ public class Order {
 
     @ManyToMany
     @JoinTable(name = "orders_details",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "detail_id")
+        joinColumns = @JoinColumn(name = "order_id"),
+        inverseJoinColumns = @JoinColumn(name = "detail_id")
     )
     private List<Detail> details;
 }

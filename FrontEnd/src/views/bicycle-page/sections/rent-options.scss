@@ -1,13 +1,15 @@
-.rent-options-container { 
-    margin-top: 20px;
-	#timeEnd option[disabled] {
-		color: #cccccc;
-	}
+.rent-options-container {
+  margin-top: 20px;
+
+  #timeEnd option[disabled] {
+    color: #cccccc;
+  }
 }
 
 .time {
-	width: 100px;
+  width: 100px;
 }
+
 .time-input {
-	width: 170px;
+  width: 170px;
 }

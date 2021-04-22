@@ -11,8 +11,6 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
-
-
 module.exports = {
   mode: isProd ? 'production' : 'development',
   entry: {
@@ -62,7 +60,7 @@ module.exports = {
         assetNameRegExp: /\.css$/g,
         cssProcessor: require('cssnano'),
         cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }],
+          preset: ['default', {discardComments: {removeAll: true}}],
         },
         canPrint: true
       }),
@@ -95,16 +93,16 @@ module.exports = {
               preprocessor: (content, loaderContext) => {
                 const replacer = (content, loaderContextPath) => {
                   return content.replace(
-                    // replace <include src="..." /> tag
-                    /<include src="(.+)"\s*\/?>(?:<\/include>)?/gi,
-                    (inc, src) => {
-                      const filePath = path.resolve(loaderContextPath, src)
-                      loaderContext.dependency(filePath)
-                      return replacer(
-                        fs.readFileSync(filePath, 'utf8'),
-                        path.dirname(filePath)
-                      )
-                    }
+                      // replace <include src="..." /> tag
+                      /<include src="(.+)"\s*\/?>(?:<\/include>)?/gi,
+                      (inc, src) => {
+                        const filePath = path.resolve(loaderContextPath, src)
+                        loaderContext.dependency(filePath)
+                        return replacer(
+                            fs.readFileSync(filePath, 'utf8'),
+                            path.dirname(filePath)
+                        )
+                      }
                   )
                 }
                 return replacer(content, path.resolve(loaderContext.context))
@@ -142,11 +140,6 @@ module.exports = {
           }]
       },
 
-
-
-
-
-
       {
         test: /\.(jpe?g|png|svg|gif|ico|webp)$/i,
         // exclude: /node_modules/,
@@ -165,9 +158,6 @@ module.exports = {
     ]
   },
 
-
-
-
   plugins: [
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [path.join(__dirname, './dist/*')],
@@ -175,17 +165,24 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: path.join(__dirname, './src/json'), to: path.join(__dirname, './dist/json') },
-        { from: path.join(__dirname, './assets/images/bicycles'), to: path.join(__dirname, './dist/img/bicycles') },
-        { from: path.join(__dirname, './assets/images/details'), to: path.join(__dirname, './dist/img/details') },
-        { from: path.join(__dirname, './assets/images/logos/icon.png'), to: path.join(__dirname, './dist/img/favicon.png') },
+        {
+          from: path.join(__dirname, './src/json'),
+          to: path.join(__dirname, './dist/json')
+        },
+        {
+          from: path.join(__dirname, './assets/images/bicycles'),
+          to: path.join(__dirname, './dist/img/bicycles')
+        },
+        {
+          from: path.join(__dirname, './assets/images/details'),
+          to: path.join(__dirname, './dist/img/details')
+        },
+        {
+          from: path.join(__dirname, './assets/images/logos/icon.png'),
+          to: path.join(__dirname, './dist/img/favicon.png')
+        },
       ],
     }),
-
-
-
-
-
 
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -242,9 +239,9 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-        filename: 'checkout-page.html',
-        template: './src/views/checkout-page/checkout-page.html',
-        chunks: ['vendors', 'checkoutPage']
-      })
+      filename: 'checkout-page.html',
+      template: './src/views/checkout-page/checkout-page.html',
+      chunks: ['vendors', 'checkoutPage']
+    })
   ]
 };

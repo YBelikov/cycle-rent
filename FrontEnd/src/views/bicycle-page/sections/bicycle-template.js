@@ -1,14 +1,13 @@
 export const getBicycleTemplate =
     ({
-         id = '',
-         name = '',
-         type = '',
-         weight = 0,
-         price = 0,
-         numOfSpeeds = 0,
-         photo = '',
-         description = ''
-     }) =>
+      name = '',
+      type = '',
+      weight = 0,
+      price = 0,
+      numOfSpeeds = 0,
+      photo = '',
+      description = ''
+    }) =>
         `<div id="bicycleContainer" class="bicycle-info container" style="margin-top: 30px;" data-price="${price}">
             <div id="bicycleAdded" class="alert alert-success" role="alert" style="display: none;">
                 Bicycle and details are sucessfully aded to basket!

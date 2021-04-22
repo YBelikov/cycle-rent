@@ -45,7 +45,6 @@
 @import "../../scss/components/buttons.scss";
 @import "../../scss/components/navbar.scss";
 
-
 //Sections
 @import "../../common/navigation/navigation.scss";
 @import '../../common/sections/master-head';
@@ -56,9 +55,9 @@
 @import "../../common/footer/footer.scss";
 
 header.master-head {
-    background-image: url("../../../assets/images/forest-dark.jpeg");
+  background-image: url("../../../assets/images/forest-dark.jpeg");
 }
 
 #mainNav .navbar-nav .nav-item .nav-link {
-    color: white;
+  color: white;
 }

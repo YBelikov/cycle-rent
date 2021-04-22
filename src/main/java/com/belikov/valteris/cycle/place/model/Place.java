@@ -20,6 +20,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "places")
 public class Place {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

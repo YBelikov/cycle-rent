@@ -28,7 +28,7 @@ public class DetailServiceImpl implements DetailService {
     @Override
     public List<DetailDTO> getAll() {
         return detailRepository.findAll().stream()
-                .map(detailMapper::mapEntityToDomain).collect(Collectors.toList());
+            .map(detailMapper::mapEntityToDomain).collect(Collectors.toList());
     }
 
     @Override

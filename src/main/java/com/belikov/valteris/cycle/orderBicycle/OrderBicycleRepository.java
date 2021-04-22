@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderBicycleRepository extends JpaRepository<OrderBicycle, Long> {
-    public List<OrderBicycle> findAllByOrder(Order order);
+
+    List<OrderBicycle> findAllByOrder(Order order);
 }

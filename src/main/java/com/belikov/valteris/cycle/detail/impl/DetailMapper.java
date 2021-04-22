@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DetailMapper implements Mapper<DetailDTO, Detail> {
+
     @Override
     public DetailDTO mapEntityToDomain(Detail entity) {
         if (entity == null) {
