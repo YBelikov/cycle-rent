@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Admin</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/item_editor.css">
+</head>
+
+<body><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo.png"/>
+    <title>Menu</title>
+    <!-- Font Awesome icons (free version)-->
+    <link href="libs/fontawesome-free-5.12.1-web/css/all.css" rel="stylesheet"/>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="libs/bootstrap-4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger"><img src="assets/img/logo.png" alt=""/></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <em class="fas fa-bars ml-1"></em>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link active">Bicycles</a></li>
+                <li class="nav-item"><a class="nav-link" href="">My orders</a></li>
+                <li class="nav-item"><a class="nav-link">Basket</a></li>
+                <li class="nav-item"><a class="nav-link" href=""><em class="fas fa-sign-out-alt"></em></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+ <div class="col-md-4 pl-20 item-fields">
+    <img src="assets/img/mobius-sl.jpg" class="img-fluid py-3">
+    <form>
+          <div class="form-group py-3">
+            <label for="itemPhotoForm">Upload the item photo</label>
+            <input type="file" class="form-control-file" id="itemPhotoForm">
+          </div>
+    </form>
+    <form>
+        <div class="form-group">
+            <label for="itemName">Name</label>
+            <input type="text" class="form-control" id="itemName" placeholder="Enter item name">
+        </div>
+        <div class="dropdown pt-3"><button class="btn btn-success dropdown-toggle bicycle-type" aria-expanded="false" data-bs-toggle="dropdown" type="button">Bicycle type</button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Mountain</a>
+            <a class="dropdown-item" href="#">City</a>
+            <a class="dropdown-item" href="#">For kids</a>
+        </div>
+        </div>
+        <div class="form-group pt-3">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="4"></textarea>
+        </div>
+        <div class="form-group pt-3">
+            <label for="pricePerHour">Price</label>
+            <input type="text" class="form-control" id="pricePerHour" placeholder="Rent price per hour">
+        </div>
+    </form>
+    </div>
+<button type="submit" class="btn btn-success save-button mt-3">Save&nbsp;<em class="fas fa-save"></em></button>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
