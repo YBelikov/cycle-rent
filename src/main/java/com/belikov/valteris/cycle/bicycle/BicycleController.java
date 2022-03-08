@@ -71,6 +71,11 @@ public class BicycleController {
         return "redirect:/index";
     }
 
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "admin-page";
+    }
+
     @GetMapping("/bicycles")
     public String bicyclesListPage() {
         return "bicycle-list";

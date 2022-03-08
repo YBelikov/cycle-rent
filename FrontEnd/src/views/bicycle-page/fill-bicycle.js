@@ -13,4 +13,3 @@ export function fillDetails(details) {
   });
   document.getElementById('details-list').innerHTML = detailsItems;
 }
-

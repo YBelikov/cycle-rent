@@ -245,6 +245,13 @@ module.exports = {
       filename: '../templates/checkout-page.html',
       template: './src/views/checkout-page/checkout-page.html',
       chunks: ['vendors', 'checkoutPage']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: '../templates/admin-page.html',
+      template: './src/views/admin-page/admin-page.html',
+      chunks: ['vendors', 'adminPage']
     })
+
   ]
 };
