@@ -76,6 +76,11 @@ public class BicycleController {
         return "admin-page";
     }
 
+    @GetMapping("/item-editor")
+    public String itemEditor() {
+        return "item-editor";
+    }
+
     @GetMapping("/bicycles")
     public String bicyclesListPage() {
         return "bicycle-list";

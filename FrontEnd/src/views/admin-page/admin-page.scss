@@ -2,10 +2,7 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/root";
-@import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/images";
-@import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/transitions";
 @import "~bootstrap/scss/nav";
@@ -14,22 +11,21 @@
 @import "~bootstrap/scss/pagination";
 @import "~bootstrap/scss/utilities";
 
-// Components
-@import "../../scss/global.scss";
-@import "../../scss/components/buttons.scss";
-@import "../../scss/components/navbar.scss";
+// Sections
 @import "../../common/navigation/navigation.scss";
 @import "../../common/sections/master-head.scss";
+@import "src/common/pagination/pagination-buttons.scss";
+@import "../../common/footer/footer.scss";
 
 container {
     padding: 2rem 0rem;
 }
 
-.add-item-container {
+add-item-container {
     padding-top: 20px;
 }
 
-.copyright-footer {
+copyright-footer {
     text-align: center;
     font-size: 0.9rem;
     background-color: #212529;
@@ -38,11 +34,13 @@ container {
     flex-shrink: 0;
 }
 
-.bicycles-and-accessories th {
-    vertical-align: middle;
-    text-align: center;
+bicycles-and-accessories {
+    th {
+        vertical-align: middle;
+        text-align: center;
+    }
 }
 
 header.master-head {
-    background-image: url("../../../assets/images/forest-dark.jpeg");
+        background-image: url("../../../assets/images/forest-dark.jpeg");
 }

@@ -1,0 +1,20 @@
+.item-fields {
+    padding-left: 5rem;
+    padding-top: 6.5rem;
+}
+
+textarea {
+    resize: none;
+}
+
+.save-button {
+    margin-left: 80px;
+}
+
+.fa-edit:hover {
+    color: #d9d9d9;
+}
+
+.fa-trash-alt:hover {
+    color: #d9d9d9;
+}
