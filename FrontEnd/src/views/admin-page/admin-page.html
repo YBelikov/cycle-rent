@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Bicycle List</title>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Admin page</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"
@@ -15,22 +15,12 @@
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-  </head>
-  <body id="page-top">
-    <include src="../../common/navigation/navigation.html"/>
-    <header class="master-head">
-      <div class="container">
-        <div class="section-title text-center">
-          <h2 class="text-uppercase">Our Bicycles</h2>
-          <span class="title-line">
-              <em class="fa fa-bicycle fa-2x" aria-hidden="true"></em>
-          </span>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </div>
-      </div>
-    </header>
-    <include src="./sections/_product-list.html"/>
-    <include src="../../common/footer/footer.html"/>
+</head>
+<body id="page-top">
+    <include src="../../common/navigation/navigation-minor.html"/>
+    <include src="./sections/admin-buttons.html"/>
+    <include src="./sections/items-table.html"/>
+    <include src="../../common/footer/footer.html">
     <script type="text/javascript"/>
-  </body>
+</body>
 </html>

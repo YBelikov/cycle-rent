@@ -12,16 +12,21 @@
 @import "~bootstrap/scss/navbar";
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/pagination";
-@import "~bootstrap/scss/badge";
 @import "~bootstrap/scss/utilities";
+
 
 // Components
 @import "../../scss/global.scss";
 @import "../../scss/components/buttons.scss";
-@import "./sections/_order-list.scss";
 @import "../../scss/components/navbar.scss";
 
 // Sections
 @import "../../common/navigation/navigation.scss";
-@import "../../common/pagination/pagination-buttons.scss";
+@import "src/common/pagination/pagination-buttons.scss";
 @import "../../common/footer/footer.scss";
+@import "./sections/admin-buttons.scss";
+@import "./sections/items-table.scss";
+
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: white;
+}
