@@ -1,94 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-        <title>Admin</title>
-    </head>
-    <body>
-        <div>
-            <link rel="icon" type="image/x-icon" href="blob:file:///13ca5925-95aa-4b9b-ba9c-3851176caa9b" />
-            <title>Menu</title>
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" type="text/css"/>
-            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-            <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-            <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-
-            <include src="../../common/navigation/navigation.html"/>
-
-            <header class="master-head">
-                <div class="container">
-                    <div class="section-title text-center">
-                        <h2 class="text-uppercase">Our Bicycles</h2>
-                        <span class="title-line">
-                        <em class="fa fa-bicycle fa-2x" aria-hidden="true"></em>
-                    </span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-            </header>
-
-            <div class="container add-item-container">
-                <div class="add-item-button col d-flex flex-row justify-content-start"><button id="addNewItem" class="add-new-item btn btn-success" type="button">
-                    Add new item <em class="fas fa-plus"></em></button></div>
-            </div>
-
-            <div class="container items-container">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table bicycles-and-accessories">
-                            <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Weight</th>
-                                <th scope="col">Num of speeds</th>
-                                <th scope="col">Type</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">UP! 12&quot; Clifford</th>
-                                <td class="w-25"><img class="img-fluid img-thumbnail" src="blob:file:///18751996-9aa4-4463-9a7a-a92a65a546a2" alt="Sheep" /></td>
-                                <td>UP! 12&quot; Clifford Kid&#39;s bike in Yellow is perfect for getting Kids out on trail adventures. </td>
-                                <td>180</td>
-                                <td>15</td>
-                                <td>6</td>
-                                <td>For kids</td>
-                                <td><i class="fas fa-edit fa-lg"></i></td>
-                                <td><i class="fas fa-trash-alt fa-lg"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">TITAN Expert 29″ NEW 2018</th>
-                                <td class="w-25"><img class="img-fluid img-thumbnail" src="blob:file:///9801b415-823c-420d-ab6f-671a02f6e078" alt="Sheep" /></td>
-                                <td>This Expert 29 ″ model is developed taking into account the latest trends in the cycling industry. Copes with rough terrain.</td>
-                                <td>290</td>
-                                <td>11.5</td>
-                                <td>21</td>
-                                <td>Mountain</td>
-                                <td><i class="fas fa-edit fa-lg"></i></td>
-                                <td><i class="fas fa-trash-alt fa-lg"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">UP! 12&quot; Clifford</th>
-                                <td class="w-25"><img class="img-fluid img-thumbnail" src="blob:file:///18751996-9aa4-4463-9a7a-a92a65a546a2" alt="Sheep" /></td>
-                                <td>UP! 12&quot; Clifford Kid&#39;s bike in Yellow is perfect for getting Kids out on trail adventures. </td>
-                                <td>180</td>
-                                <td>15</td>
-                                <td>6</td>
-                                <td>For kids</td>
-                                <td><i class="fas fa-edit fa-lg"></i></td>
-                                <td><i class="fas fa-trash-alt fa-lg"></i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <include src="../../common/footer/footer.html"/>
-        </div>
-        <script type="text/javascript"/>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Admin page</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"
+          type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic"
+          rel="stylesheet"
+          type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet"
+          type="text/css"/>
+    <link rel="icon" href="/img/favicon.png">
+</head>
+<body>
+    <include src="../../common/navigation/navigation-minor.html"/>
+    <include src="./sections/admin-buttons.html"/>
+    <include src="./sections/items-table.html"/>
+    <include src="../../common/footer/footer.html"/>
+    <script type="text/javascript"/>
+</body>
 </html>

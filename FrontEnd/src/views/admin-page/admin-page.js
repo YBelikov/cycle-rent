@@ -1,3 +1,4 @@
 import 'bootstrap/js/src/collapse';
-import '../../js/scrolling'
-require('./admin-page.scss')
+import '../../js/scrolling';
+
+require('./admin-page.scss');

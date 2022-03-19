@@ -1,0 +1,22 @@
+.items-container {
+  padding-top: 1vh;
+}
+
+.bicycles-and-accessories {
+  th {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  td {
+    padding: 20px;
+  }
+
+  .fa-edit:hover {
+    color: #d9d9d9;
+  }
+
+  .fa-trash-alt:hover {
+    color: #d9d9d9;
+  }
+}
