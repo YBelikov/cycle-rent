@@ -58,6 +58,9 @@ public class BicycleController {
         return "admin-page";
     }
 
+    @GetMapping("/item-editor")
+    public String itemEditor() { return "item-editor"; }
+
     @GetMapping("/index")
     public String showHomePage(RedirectAttributes attributes, @ModelAttribute("userDTO") UserDTO userDTO, Model model) {
         final Optional<OrderDTO> formedOrder = orderService.findByUserDTOAndStatus(userDTO, OrderStatus.FORMED);
