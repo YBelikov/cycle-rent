@@ -20,4 +20,3 @@ export function fillPagination(totalPages, currentPage) {
   pagination.innerHTML = paginationItems;
   navActions();
 }
-

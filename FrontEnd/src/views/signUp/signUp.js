@@ -1,6 +1,5 @@
-require('./signUp.scss');
-
 import 'bootstrap/js/src/collapse';
+require('./signUp.scss');
 const obj = {};
 
 document.querySelector('.login100-form-btn').addEventListener('click', () => {
@@ -44,4 +43,3 @@ document.querySelector('.login100-form-btn').addEventListener('click', () => {
     }
   });
 })
-

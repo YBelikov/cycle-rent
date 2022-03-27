@@ -1,0 +1,32 @@
+@import "../../scss/variables.scss";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/utilities";
+
+
+// Components
+@import "../../scss/global.scss";
+@import "../../scss/components/buttons.scss";
+@import "../../scss/components/navbar.scss";
+
+// Sections
+@import "../../common/navigation/navigation.scss";
+@import "src/common/pagination/pagination-buttons.scss";
+@import "../../common/footer/footer.scss";
+@import "./sections/admin-buttons.scss";
+@import "src/views/bicycles-admin-page/sections/bicycle-admin-table";
+
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: white;
+}

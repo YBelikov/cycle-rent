@@ -23,7 +23,8 @@ module.exports = {
     bicyclePage: './src/views/bicycle-page/bicycle-page.js',
     cartPage: './src/views/cart-page/cart-page.js',
     checkoutPage: './src/views/checkout-page/checkout-page.js',
-    adminPage: './src/views/admin-page/admin-page.js',
+    bicyclesAdminPage: './src/views/bicycles-admin-page/bicycles-admin-page.js',
+    detailsAdminPage: './src/views/details-admin-page/details-admin-page.js',
     itemEditor: './src/views/item-editor/item-editor.js'
   },
   output: {
@@ -250,9 +251,15 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      filename: '../templates/admin-page.html',
-      template: './src/views/admin-page/admin-page.html',
-      chunks: ['vendors', 'adminPage']
+      filename: '../templates/bicycles-admin-page.html',
+      template: './src/views/bicycles-admin-page/bicycles-admin-page.html',
+      chunks: ['vendors', 'bicyclesAdminPage']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: '../templates/details-admin-page.html',
+      template: './src/views/details-admin-page/details-admin-page.html',
+      chunks: ['vendors', 'detailsAdminPage']
     }),
 
     new HtmlWebpackPlugin({

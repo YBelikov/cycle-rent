@@ -1,9 +1,9 @@
-require('./bicycle-list.scss');
-require('../../js/scrolling');
-
 import 'bootstrap/js/src/collapse';
 import {fillTable} from './fill-table';
 import {fillPagination} from './fill-table';
+
+require('./bicycle-list.scss');
+require('../../js/scrolling');
 
 let sortBy = 'PRICE_UP', bicycleType = 'ALL', pageNumber = 1;
 

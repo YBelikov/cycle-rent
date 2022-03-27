@@ -1,9 +1,11 @@
 package com.belikov.valteris.cycle.bicycle;
 
+import com.belikov.valteris.cycle.bicycle.model.Bicycle;
 import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycle.model.SortType;
 import com.belikov.valteris.cycle.detail.DetailService;
+import com.belikov.valteris.cycle.detail.model.DetailDTO;
 import com.belikov.valteris.cycle.order.OrderService;
 import com.belikov.valteris.cycle.order.model.OrderDTO;
 import com.belikov.valteris.cycle.order.model.OrderStatus;
@@ -15,6 +17,7 @@ import com.belikov.valteris.cycle.user.model.UserDTO;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -59,9 +62,18 @@ public class BicycleController {
         if (!formedOrder.isPresent()) {
             createNewOrder(userDTO);
         }
-
         model.addAttribute("userDTO", userDTO);
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "bicycles-admin-page";
+    }
+
+    @GetMapping("/item-editor")
+    public String itemEditor(/*@PathVariable Long id, Model model*/) {
+        return "item-editor";
     }
 
     @PostMapping("/index")
@@ -69,16 +81,6 @@ public class BicycleController {
         user = userService.findByUsername(user.getUsername()).orElse(null);
         attributes.addFlashAttribute("userDTO", user);
         return "redirect:/index";
-    }
-
-    @GetMapping("/admin")
-    public String adminPage() {
-        return "admin-page";
-    }
-
-    @GetMapping("/item-editor")
-    public String itemEditor() {
-        return "item-editor";
     }
 
     @GetMapping("/bicycles")
@@ -98,6 +100,30 @@ public class BicycleController {
         return getJson(numberOfPage, bicyclePage, totalPages);
     }
 
+    @GetMapping("/details-admin/{id}")
+    public String details(@PathVariable Long id, Model model) {
+        model.addAttribute("bicycle", bicycleService.getById(id).orElse(new BicycleDTO()));
+        return "details-admin-page";
+    }
+    @GetMapping("/api/bicycles/{id}/details")
+    @ResponseBody
+    public String detailsForBicycle(@PathVariable Long id) {
+        BicycleDTO bicycleDTO = bicycleService.getById(id).orElse(new BicycleDTO());
+        List<DetailDTO> detailDTOS = bicycleDTO.getDetailDTOS();
+        JSONObject json = new JSONObject();
+        json.put("details", detailDTOS);
+        return json.toString();
+    }
+
+    @GetMapping("/bicycles/all")
+    @ResponseBody
+    public String allBicycles() {
+        List<BicycleDTO> allBicycles = bicycleService.getAll();
+        JSONObject json = new JSONObject();
+        json.put("bicycles", allBicycles);
+        return json.toString();
+    }
+
     @PostMapping("/bicycleName")
     @ResponseBody
     public String getBicycleNames(@RequestBody String example) {
@@ -106,7 +132,6 @@ public class BicycleController {
         if (totalPages == 0) {
             totalPages = 1;
         }
-
         return getJson(1, bicyclePage, totalPages);
     }
 
@@ -221,7 +246,6 @@ public class BicycleController {
         json.put("currentPage", numberOfPage);
         json.put("totalPages", totalPages);
         json.put("bicycles", bicyclePage.get().collect(Collectors.toList()));
-
         return json.toString();
     }
 }
