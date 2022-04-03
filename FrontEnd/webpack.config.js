@@ -24,7 +24,8 @@ module.exports = {
     checkoutPage: './src/views/checkout-page/checkout-page.js',
     bicyclesAdminPage: './src/views/bicycles-admin-page/bicycles-admin-page.js',
     detailsAdminPage: './src/views/details-admin-page/details-admin-page.js',
-    itemEditor: './src/views/item-editor/item-editor.js'
+    bicycleEditor: './src/views/bicycle-editor/bicycle-editor.js',
+    detailEditor: './src/views/detail-editor/detail-editor.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -260,9 +261,15 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      filename: '../templates/item-editor.html',
-      template: './src/views/item-editor/item-editor.html',
-      chunks: ['vendors', 'itemEditor']
+      filename: '../templates/bicycle-editor.html',
+      template: './src/views/bicycle-editor/bicycle-editor.html',
+      chunks: ['vendors', 'bicycleEditor']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: '../templates/detail-editor.html',
+      template: './src/views/detail-editor/detail-editor.html',
+      chunks: ['vendors', 'detailEditor']
     })
   ]
 };

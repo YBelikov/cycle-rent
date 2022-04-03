@@ -16,6 +16,6 @@ export const bicycleAdminRowTemplate =  ({
                 <td>${weight}</td>
                 <td>${numOfSpeeds}</td>
                 <td>${type}</td>
-                <td><i class="fas fa-edit fa-lg"></i></td>
+                <td><a href="/bicycle-editor/${id}"><i class="fas fa-edit fa-lg"></i></a></td>
                 <td><i class="fas fa-trash-alt fa-lg"></i></td>
         </tr>`;

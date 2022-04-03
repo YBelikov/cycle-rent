@@ -8,6 +8,5 @@ export function fillList(bicycleItems) {
     });
 
     let itemsList = document.getElementById( 'bicyclesAdminList');
-    console.log("items: " + items);
     itemsList.innerHTML = items;
 }

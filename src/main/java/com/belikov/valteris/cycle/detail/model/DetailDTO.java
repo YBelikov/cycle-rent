@@ -12,12 +12,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class DetailDTO {
-
-    private Long id;
-    private String name;
-    private String description;
-    private String photo;
-    private double price;
-    private List<OrderDTO> orderDTOS;
-    private List<BicycleDTO> bicycleDTOS;
+    public Long id;
+    public String name;
+    public String description;
+    public String photo;
+    public double price;
+    public List<OrderDTO> orderDTOS;
+    public List<BicycleDTO> bicycleDTOS;
 }

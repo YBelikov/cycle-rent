@@ -3,7 +3,6 @@ import {fillList} from "./fill-list";
 
 require('./details-admin-page.scss');
 
-
 window.addEventListener('load', function () {
     const bicycleId = document.getElementById("detailsList").getAttribute(
         "data-bicycle-id");

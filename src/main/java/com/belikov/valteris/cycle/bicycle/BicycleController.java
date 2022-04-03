@@ -1,6 +1,6 @@
 package com.belikov.valteris.cycle.bicycle;
 
-import com.belikov.valteris.cycle.bicycle.model.Bicycle;
+import com.belikov.valteris.cycle.FileUtils;
 import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycle.model.SortType;
@@ -14,6 +14,8 @@ import com.belikov.valteris.cycle.orderBicycle.model.OrderBicycleDTO;
 import com.belikov.valteris.cycle.place.PlaceService;
 import com.belikov.valteris.cycle.user.UserService;
 import com.belikov.valteris.cycle.user.model.UserDTO;
+
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,22 +30,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @SessionAttributes({"userDTO"})
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BicycleController {
-
+    private final String PATH_TO_BICYCLES_IMAGE_DIR = "/img/bicycles/";
+    private final String PATH_TO_DETAILS_IMAGE_DIR = "/img/details/";
     private final BicycleService bicycleService;
     private final UserService userService;
     private final OrderService orderService;
@@ -71,9 +68,11 @@ public class BicycleController {
         return "bicycles-admin-page";
     }
 
-    @GetMapping("/item-editor")
-    public String itemEditor(/*@PathVariable Long id, Model model*/) {
-        return "item-editor";
+    @GetMapping("/bicycle-editor/{id}")
+    public String itemEditor(@PathVariable Long id, Model model) {
+        BicycleDTO bicycle = bicycleService.getById(id).orElse(new BicycleDTO());
+        model.addAttribute("bicycle", bicycle);
+        return "bicycle-editor";
     }
 
     @PostMapping("/index")
@@ -101,10 +100,23 @@ public class BicycleController {
     }
 
     @GetMapping("/details-admin/{id}")
-    public String details(@PathVariable Long id, Model model) {
+    public String detailsAdmin(@PathVariable Long id, Model model) {
         model.addAttribute("bicycle", bicycleService.getById(id).orElse(new BicycleDTO()));
         return "details-admin-page";
     }
+
+    @GetMapping("/detail-editor/{id}")
+    public String detailEditor(@PathVariable Long id, Model model) {
+        model.addAttribute("detail", detailService.getById(id).orElse(new DetailDTO()));
+        return "detail-editor";
+    }
+
+    @GetMapping("/detail-editor")
+    public String newDetailEditor(Model model) {
+        model.addAttribute("detail", new DetailDTO());
+        return "detail-editor";
+    }
+
     @GetMapping("/api/bicycles/{id}/details")
     @ResponseBody
     public String detailsForBicycle(@PathVariable Long id) {
@@ -113,6 +125,13 @@ public class BicycleController {
         JSONObject json = new JSONObject();
         json.put("details", detailDTOS);
         return json.toString();
+    }
+
+    @GetMapping("/api/details/{id}")
+    @ResponseBody
+    public DetailDTO detail(@PathVariable Long id) {
+        DetailDTO detail = detailService.getById(id).orElse(new DetailDTO());
+        return detail;
     }
 
     @GetMapping("/bicycles/all")
@@ -182,6 +201,38 @@ public class BicycleController {
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody BicycleDTO newBicycle) {
         bicycleService.save(newBicycle);
+    }
+
+    @PostMapping("/admin/bicycle/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String addBicycle(@RequestParam("image") MultipartFile photoFile, @RequestBody BicycleDTO newBicycle) {
+        String photo = StringUtils.cleanPath(photoFile.getOriginalFilename());
+        newBicycle.setPhoto(photo);
+        bicycleService.save(newBicycle);
+        try {
+            FileUtils.saveFile(PATH_TO_BICYCLES_IMAGE_DIR, photo, photoFile);
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/bicycle/{id}/detail/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String addBicycle(@PathVariable Long id, @RequestParam("image") MultipartFile photoFile, @RequestBody DetailDTO newDetail) {
+        String photo = StringUtils.cleanPath(photoFile.getOriginalFilename());
+        newDetail.setPhoto(photo);
+        detailService.save(newDetail);
+        BicycleDTO bicycle = bicycleService.getById(id).orElse(new BicycleDTO());
+        bicycle.getDetailDTOS().add(newDetail);
+        bicycleService.save(bicycle);
+
+        try {
+            FileUtils.saveFile(PATH_TO_DETAILS_IMAGE_DIR, photo, photoFile);
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return "redirect:/details-admin/" + id.toString();
     }
 
     @DeleteMapping("/bicycle/delete/{id}")

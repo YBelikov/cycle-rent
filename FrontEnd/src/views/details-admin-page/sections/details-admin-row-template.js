@@ -10,6 +10,6 @@ export const detailsAdminRowTemplate =  ({
          <td class="w-25"><img class="img-fluid img-thumbnail" src="/img/details/${photo}" alt="Sheep" /></td>
          <td>${description}</td>
          <td>${price}</td>
-         <td><i class="fas fa-edit fa-lg"></i></td>
+         <td><a href="/detail-editor/${id}"><i class="fas fa-edit fa-lg"></i></a></td>
          <td><i class="fas fa-trash-alt fa-lg"></i></td>
      </tr>`;

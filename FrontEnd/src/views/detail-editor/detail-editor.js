@@ -1,2 +1,2 @@
 import 'bootstrap/js/src/collapse';
-require('./item-editor.scss');
+require('./detail-editor.scss');
