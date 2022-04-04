@@ -75,6 +75,12 @@ public class BicycleController {
         return "bicycle-editor";
     }
 
+    @GetMapping("/bicycle-editor")
+    public String newBicycleEditor(Model model) {
+        model.addAttribute("bicycle", new BicycleDTO());
+        return "bicycle-editor";
+    }
+
     @PostMapping("/index")
     public String performLogin(@ModelAttribute UserDTO user, RedirectAttributes attributes) {
         user = userService.findByUsername(user.getUsername()).orElse(null);
@@ -204,16 +210,22 @@ public class BicycleController {
     }
 
     @PostMapping("/admin/bicycle/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String addBicycle(@RequestParam("image") MultipartFile photoFile, @RequestBody BicycleDTO newBicycle) {
+    public String addBicycle(@RequestParam("image") MultipartFile photoFile, BicycleDTO newBicycle, RedirectAttributes redirectAttributes) {
         String photo = StringUtils.cleanPath(photoFile.getOriginalFilename());
         newBicycle.setPhoto(photo);
+        newBicycle.setDetailDTOS(new ArrayList<DetailDTO>());
         bicycleService.save(newBicycle);
         try {
             FileUtils.saveFile(PATH_TO_BICYCLES_IMAGE_DIR, photo, photoFile);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/bicycle/remove/{id}")
+    public String removeBicycle(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        bicycleService.delete(id);
         return "redirect:/admin";
     }
 

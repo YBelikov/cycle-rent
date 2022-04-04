@@ -1,0 +1,41 @@
+<div class="col-md-4 pl-20 bicycle-edit-area" th:object="${bicycle}">
+  <h2 th:inline="text"> Item: [[${bicycle.name}]]</h2>
+  <form th:action="@{/admin/bicycle/add}" th:object="${bicycle}" method="post" enctype="multipart/form-data">
+    <div class="form-group py-3">
+      <img class="img-fluid py-3" th:src="@{/img/bicycles/{photo}(photo=${bicycle.photo})}" alt="/img/bicycles/no-image.jpg"/>
+    </div>
+    <div class="form-group py-3">
+      <label for="itemPhotoForm">Upload the item photo</label>
+      <input id="itemPhotoForm" class="form-control-file" type="file" name="image" accept="image/jpeg"/>
+    </div>
+    <div class="form-group">
+      <label for="itemName">Name</label>
+      <input id="itemName" class="form-control" type="text" th:value="${bicycle.name}" th:field="*{name}" placeholder="Enter item name" />
+    </div>
+    <div class="bicycle-type-dropdown form-group pt-3">
+      <label for="dropdownType">Type of bicycle<br></label>
+      <select id="dropdownType" class="main-dd-button" th:field="${bicycle.type}">
+        <option th:value="MOUNTAIN">Mountain</option>
+        <option th:value="CITY">City</option>
+        <option th:value="FOR_KIDS">For kids</option>
+      </select>
+    </div>
+    <div class="form-group pt-3">
+      <label for="pricePerHour">Weight</label>
+      <input id="pricePerHour" class="form-control" type="number" th:value="${bicycle.weight}" th:field="*{weight}" placeholder="Weight" />
+    </div>
+    <div class="form-group pt-3">
+      <label for="pricePerHour">Price</label>
+      <input id="pricePerHour" class="form-control" type="number" th:value="${bicycle.price}" th:field="*{price}" placeholder="Rent price per hour" />
+    </div>
+    <div class="form-group pt-3">
+      <label for="pricePerHour">Number of speeds</label>
+      <input id="pricePerHour" class="form-control" type="number" th:value="${bicycle.numOfSpeeds}" th:field="*{numOfSpeeds}" placeholder="Number of speeds" />
+    </div>
+    <div class="form-group pt-3">
+      <label for="description">Description</label>
+      <textarea id="description" class="form-control" th:value="${bicycle.description}" th:field="*{description}" rows="4"></textarea>
+    </div>
+    <button class="btn btn-success save-button mt-3" type="submit">Save <em class="fas fa-save"></em></button>
+  </form>
+</div>
