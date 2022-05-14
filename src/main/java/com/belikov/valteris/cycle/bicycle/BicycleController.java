@@ -15,6 +15,7 @@ import com.belikov.valteris.cycle.place.PlaceService;
 import com.belikov.valteris.cycle.user.UserService;
 import com.belikov.valteris.cycle.user.model.UserDTO;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -39,8 +41,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @SessionAttributes({"userDTO"})
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BicycleController {
-    private final String PATH_TO_BICYCLES_IMAGE_DIR = "/img/bicycles/";
-    private final String PATH_TO_DETAILS_IMAGE_DIR = "/img/details/";
     private final BicycleService bicycleService;
     private final UserService userService;
     private final OrderService orderService;
@@ -53,6 +53,13 @@ public class BicycleController {
         return new UserDTO();
     }
 
+    @PostMapping("/index")
+    public String performLogin(@ModelAttribute UserDTO user, RedirectAttributes attributes) {
+        user = userService.findByUsername(user.getUsername()).orElse(null);
+        attributes.addFlashAttribute("userDTO", user);
+        return "redirect:/index";
+    }
+
     @GetMapping("/index")
     public String showHomePage(RedirectAttributes attributes, @ModelAttribute("userDTO") UserDTO userDTO, Model model) {
         final Optional<OrderDTO> formedOrder = orderService.findByUserDTOAndStatus(userDTO, OrderStatus.FORMED);
@@ -61,31 +68,6 @@ public class BicycleController {
         }
         model.addAttribute("userDTO", userDTO);
         return "index";
-    }
-
-    @GetMapping("/admin")
-    public String adminPage() {
-        return "bicycles-admin-page";
-    }
-
-    @GetMapping("/bicycle-editor/{id}")
-    public String itemEditor(@PathVariable Long id, Model model) {
-        BicycleDTO bicycle = bicycleService.getById(id).orElse(new BicycleDTO());
-        model.addAttribute("bicycle", bicycle);
-        return "bicycle-editor";
-    }
-
-    @GetMapping("/bicycle-editor")
-    public String newBicycleEditor(Model model) {
-        model.addAttribute("bicycle", new BicycleDTO());
-        return "bicycle-editor";
-    }
-
-    @PostMapping("/index")
-    public String performLogin(@ModelAttribute UserDTO user, RedirectAttributes attributes) {
-        user = userService.findByUsername(user.getUsername()).orElse(null);
-        attributes.addFlashAttribute("userDTO", user);
-        return "redirect:/index";
     }
 
     @GetMapping("/bicycles")
@@ -103,24 +85,6 @@ public class BicycleController {
         numberOfPage = checkNumberOfPage(numberOfPage, totalPages);
 
         return getJson(numberOfPage, bicyclePage, totalPages);
-    }
-
-    @GetMapping("/details-admin/{id}")
-    public String detailsAdmin(@PathVariable Long id, Model model) {
-        model.addAttribute("bicycle", bicycleService.getById(id).orElse(new BicycleDTO()));
-        return "details-admin-page";
-    }
-
-    @GetMapping("/detail-editor/{id}")
-    public String detailEditor(@PathVariable Long id, Model model) {
-        model.addAttribute("detail", detailService.getById(id).orElse(new DetailDTO()));
-        return "detail-editor";
-    }
-
-    @GetMapping("/detail-editor")
-    public String newDetailEditor(Model model) {
-        model.addAttribute("detail", new DetailDTO());
-        return "detail-editor";
     }
 
     @GetMapping("/api/bicycles/{id}/details")
@@ -207,44 +171,6 @@ public class BicycleController {
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody BicycleDTO newBicycle) {
         bicycleService.save(newBicycle);
-    }
-
-    @PostMapping("/admin/bicycle/add")
-    public String addBicycle(@RequestParam("image") MultipartFile photoFile, BicycleDTO newBicycle, RedirectAttributes redirectAttributes) {
-        String photo = StringUtils.cleanPath(photoFile.getOriginalFilename());
-        newBicycle.setPhoto(photo);
-        newBicycle.setDetailDTOS(new ArrayList<DetailDTO>());
-        bicycleService.save(newBicycle);
-        try {
-            FileUtils.saveFile(PATH_TO_BICYCLES_IMAGE_DIR, photo, photoFile);
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/admin/bicycle/remove/{id}")
-    public String removeBicycle(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        bicycleService.delete(id);
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/admin/bicycle/{id}/detail/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String addBicycle(@PathVariable Long id, @RequestParam("image") MultipartFile photoFile, @RequestBody DetailDTO newDetail) {
-        String photo = StringUtils.cleanPath(photoFile.getOriginalFilename());
-        newDetail.setPhoto(photo);
-        detailService.save(newDetail);
-        BicycleDTO bicycle = bicycleService.getById(id).orElse(new BicycleDTO());
-        bicycle.getDetailDTOS().add(newDetail);
-        bicycleService.save(bicycle);
-
-        try {
-            FileUtils.saveFile(PATH_TO_DETAILS_IMAGE_DIR, photo, photoFile);
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
-        return "redirect:/details-admin/" + id.toString();
     }
 
     @DeleteMapping("/bicycle/delete/{id}")

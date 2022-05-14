@@ -25,7 +25,8 @@ module.exports = {
     bicyclesAdminPage: './src/views/bicycles-admin-page/bicycles-admin-page.js',
     detailsAdminPage: './src/views/details-admin-page/details-admin-page.js',
     bicycleEditor: './src/views/bicycle-editor/bicycle-editor.js',
-    detailEditor: './src/views/detail-editor/detail-editor.js'
+    detailEditor: './src/views/detail-editor/detail-editor.js',
+    modals: './src/views/modals/modals.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -270,6 +271,12 @@ module.exports = {
       filename: '../templates/detail-editor.html',
       template: './src/views/detail-editor/detail-editor.html',
       chunks: ['vendors', 'detailEditor']
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: '../templates/modals.html',
+      template: './src/views/modals/modals.html',
+      chunks: ['vendors', 'modals']
     })
   ]
 };

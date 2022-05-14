@@ -39,8 +39,11 @@ public class BicycleServiceImpl implements BicycleService {
     }
 
     @Override
-    public void save(BicycleDTO newBicycle) {
-        bicycleRepository.save(bicycleMapper.mapDomainToEntity(newBicycle));
+    public BicycleDTO save(BicycleDTO newBicycle) {
+        if (newBicycle.getId() != null) {
+            // return bicycleMapper.mapEntityToDomain(bicycleRepository.update(bicycleMapper.mapDomainToEntity(newBicycle)));
+        }
+        return bicycleMapper.mapEntityToDomain(bicycleRepository.save(bicycleMapper.mapDomainToEntity(newBicycle)));
     }
 
     @Override

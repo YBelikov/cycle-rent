@@ -3,6 +3,7 @@ package com.belikov.valteris.cycle.detail.model;
 import com.belikov.valteris.cycle.bicycle.model.Bicycle;
 import com.belikov.valteris.cycle.order.model.Order;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

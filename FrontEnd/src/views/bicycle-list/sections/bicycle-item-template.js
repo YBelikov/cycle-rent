@@ -12,7 +12,7 @@ export const getBicycleTemplate =
         `<div class="col mb-4">
         <div class="card h-100 border-my">
           <a href="bicycle/${id}" class="h-100">
-            <img src="img/bicycles/${photo}" class="card-img-top" alt="${photo}">
+            <img src="images/bicycles/${photo}" class="card-img-top" alt="${photo}">
             <div class="card-body">
               <h5 class="card-title">${name}</h5>
               <h6 class="card-title card-price">${price} UAH/per hour</h6>

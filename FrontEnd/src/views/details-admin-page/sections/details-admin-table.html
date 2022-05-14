@@ -10,7 +10,7 @@
                     <th scope="col">Price</th>
                 </tr>
                 </thead>
-                <tbody id="detailsList" th:attr="data-bicycle-id=${bicycle.id}">
+                <tbody id="detailsList" th:attr="data-bicycle-id=${bicycle.id}" th:object="${bicycle}">
                 </tbody>
             </table>
         </div>

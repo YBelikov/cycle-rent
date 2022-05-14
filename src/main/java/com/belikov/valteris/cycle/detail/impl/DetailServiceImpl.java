@@ -21,8 +21,8 @@ public class DetailServiceImpl implements DetailService {
     private final Mapper<DetailDTO, Detail> detailMapper;
 
     @Override
-    public void save(DetailDTO newDetail) {
-        detailRepository.save(detailMapper.mapDomainToEntity(newDetail));
+    public DetailDTO save(DetailDTO newDetail) {
+       return detailMapper.mapEntityToDomain(detailRepository.save(detailMapper.mapDomainToEntity(newDetail)));
     }
 
     @Override
@@ -34,6 +34,11 @@ public class DetailServiceImpl implements DetailService {
     @Override
     public Optional<DetailDTO> getById(Long id) {
         return detailRepository.findById(id).map(detailMapper::mapEntityToDomain);
+    }
+
+    @Override
+    public Optional<DetailDTO> getByName(String name) {
+        return detailRepository.getByName(name).map(detailMapper::mapEntityToDomain);
     }
 
     @Override

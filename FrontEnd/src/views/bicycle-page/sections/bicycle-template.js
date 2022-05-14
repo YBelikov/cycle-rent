@@ -15,7 +15,7 @@ export const getBicycleTemplate =
             <div class="row">
                 <div class="col-md-6">
                     <div class="bicycle-image-wrapper"><img class="bicycle-image w-100 d-block"
-                                                            src="/img/bicycles/${photo}"
+                                                            src="/images/bicycles/${photo}"
                                                             alt="${name}"></div>
                 </div>
                 <div class="col-md-6 text-left">

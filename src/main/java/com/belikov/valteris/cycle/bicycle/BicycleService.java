@@ -14,7 +14,7 @@ public interface BicycleService {
 
     Optional<BicycleDTO> getById(Long id);
 
-    void save(BicycleDTO newBicycle);
+    BicycleDTO save(BicycleDTO newBicycle);
 
     void delete(Long id);
 

@@ -1,23 +1,30 @@
-<div class="col-md-4 pl-20 detail-edit-area" th:object="${detail}">
+<div class="col-md-4 pl-20 detail-edit-area" th:object="${bicycle}">
   <h2 th:inline="text"> Item: [[${detail.name}]]</h2>
-  <img class="img-fluid py-3" th:src="@{/img/details/{photo}(photo=${detail.photo})}" alt="/img/details/no-image.jpg"/>
-  <form method="post">
+  <img class="img-fluid py-3" id="detailImage" th:src="@{/images/details/{photo}(photo=${detail.photo})}" alt="No image"/>
+  <form th:action="@{/admin/bicycle/{bicycleId}/detail/add(bicycleId=${bicycle.id})}" th:object="${detail}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{photo}"/>
     <div class="form-group py-3">
-      <label for="itemPhotoForm">Upload the item photo</label>
-      <input id="itemPhotoForm" class="form-control-file" type="file" name="image" accept="image/jpeg"/>
+      <label for="detailImageInput">Upload the item photo</label>
+      <input class="form-control-file" id="detailImageInput" type="file" name="image" accept="image/jpeg"/>
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}"></div>
     </div>
     <div class="form-group">
-      <label for="itemName">Name</label>
-      <input id="itemName" class="form-control" type="text" th:value="${detail.name}" placeholder="Enter item name" />
+      <label for="detailName">Name</label>
+      <input id="detailName" class="form-control" type="text" th:value="${detail.name}" th:field="*{name}" placeholder="Enter item name" />
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     </div>
     <div class="form-group pt-3">
       <label for="pricePerHour">Price</label>
-      <input id="pricePerHour" class="form-control" type="number" th:value="${detail.price}" placeholder="Rent price per hour" />
+      <input id="pricePerHour" class="form-control" type="number" th:value="${detail.price}" th:field="*{price}" placeholder="Rent price per hour" />
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
     </div>
     <div class="form-group pt-3">
       <label for="description">Description</label>
-      <textarea id="description" class="form-control" th:value="${detail.description}" rows="4"></textarea>
+      <textarea id="description" class="form-control" th:value="${detail.description}" th:field="*{description}" rows="4"></textarea>
+      <div class="alert alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
     </div>
     <button class="btn btn-success save-button mt-3" type="submit">Save <em class="fas fa-save"></em></button>
+    <a th:href="@{/details-admin/{bicycleId}(bicycleId=${bicycle.id})}" id="cancel" type="cancel" class="btn btn-danger cancel-button mt-3">Cancel</a>
   </form>
 </div>

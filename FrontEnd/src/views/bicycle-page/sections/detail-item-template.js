@@ -19,7 +19,7 @@ export const getDetailsTemplate =
                         <h6 class="font-weight-bold my-2">${price} UAH</h6>
                     </div>
                 </div>
-                <img src="/img/details/${photo}" alt="Generic placeholder image"
+                <img src="/images/details/${photo}" alt="Generic placeholder image"
                      width="200" class="ml-lg-5 order-1 order-lg-2">
             </div>
         </li>`;
