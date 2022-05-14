@@ -1,5 +1,5 @@
 <div class="col-md-4 pl-20 bicycle-edit-area">
-  <form th:action="@{/admin/bicycle/add}" th:object="${bicycle}" method="post" enctype="multipart/form-data">
+  <form th:action="@{/bicycles-admin/bicycle/add}" th:object="${bicycle}" method="post" enctype="multipart/form-data">
       <h2 id="bicycleNameHeader" th:inline="text"> Item: [[${bicycle.name}]]</h2>
     <input type="hidden" th:field="*{id}"/>
     <input type="hidden" th:field="*{photo}"/>
@@ -45,6 +45,6 @@
       <div class="alert alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
     </div>
     <button class="btn btn-success save-button mt-3" type="submit">Save <em class="fas fa-save"></em></button>
-    <a th:href="@{/admin}" id="cancel" type="cancel" class="btn btn-danger cancel-button mt-3">Cancel</a>
+    <a th:href="@{/bicycles-admin}" id="cancel" type="cancel" class="btn btn-danger cancel-button mt-3">Cancel</a>
   </form>
 </div>

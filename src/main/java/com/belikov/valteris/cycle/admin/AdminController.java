@@ -30,7 +30,7 @@ public class AdminController {
     private final BicycleService bicycleService;
     private final DetailService detailService;
 
-    @GetMapping("/admin")
+    @GetMapping("/bicycles-admin")
     public String adminPage() {
         return "bicycles-admin-page";
     }
@@ -42,27 +42,18 @@ public class AdminController {
         return "bicycle-editor";
     }
 
-    @GetMapping("/details-admin/{id}")
-    public String detailsAdmin(@PathVariable Long id, Model model) {
-        model.addAttribute("bicycle", bicycleService.getById(id).orElse(new BicycleDTO()));
+    @GetMapping("/details-admin")
+    public String detailsAdmin() {
         return "details-admin-page";
     }
 
-    @GetMapping("/detail-editor/{bicycleId}/{id}")
-    public String detailEditor(@PathVariable Long bicycleId, @PathVariable Long id, Model model) {
-        model.addAttribute("bicycle", bicycleService.getById(bicycleId).orElse(new BicycleDTO()));
-        model.addAttribute("detail", detailService.getById(id).orElse(new DetailDTO()));
+    @GetMapping("/detail-editor/{detailId}")
+    public String detailEditor(@PathVariable Long detailId, Model model) {
+        model.addAttribute("detail", detailService.getById(detailId).orElse(new DetailDTO()));
         return "detail-editor";
     }
 
-    @GetMapping("/detail-editor/{bicycleId}")
-    public String newDetailEditor(@PathVariable Long bicycleId, Model model) {
-        model.addAttribute("bicycle", bicycleService.getById(bicycleId).orElse(new BicycleDTO()));
-        model.addAttribute("detail", new DetailDTO());
-        return "detail-editor";
-    }
-
-    @PostMapping("/admin/bicycle/add")
+    @PostMapping("/bicycle-admin/bicycle/add")
     public String addBicycle(@RequestParam("image") MultipartFile photoFile,
                              @Valid @ModelAttribute("bicycle") BicycleDTO newBicycle,
                              BindingResult bindingResult,
@@ -79,29 +70,29 @@ public class AdminController {
                 FileUtils.saveFile(PATH_TO_BICYCLES_IMAGE_DIR, newBicycle.getPhoto(), photoFile);
             } catch (IOException exception) {
                 System.out.println(exception.getMessage());
-                return "redirect:/admin";
+                return "redirect:/bicycles-admin";
             }
         }
         String typeAsString = bicycleTypeAsRegularString(BicycleType.valueOf(newBicycle.getType()));
         newBicycle.setType(typeAsString);
         bicycleService.save(newBicycle);
-        return "redirect:/admin";
+        return "redirect:/bicycles-admin";
     }
 
-    @GetMapping("/admin/bicycle/remove/{id}")
+    @GetMapping("/bicycle-admin/bicycle/remove/{id}")
     public String removeBicycle(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         BicycleDTO bicycleDTO = bicycleService.getById(id).orElse(new BicycleDTO());
         try {
             FileUtils.removeFile(PATH_TO_BICYCLES_IMAGE_DIR, bicycleDTO.getPhoto());
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
-            return "redirect:/admin";
+            return "redirect:/bicycles-admin";
         }
         bicycleService.delete(id);
-        return "redirect:/admin";
+        return "redirect:/bicycles-admin";
     }
 
-    @PostMapping("/admin/bicycle/{id}/detail/add")
+    @PostMapping("/details-admin/detail/add")
     @ResponseStatus(HttpStatus.CREATED)
     public String addDetail(@PathVariable Long id,
                             @RequestParam("image") MultipartFile photoFile,
@@ -118,10 +109,11 @@ public class AdminController {
             try {
                 FileUtils.saveFile(PATH_TO_DETAILS_IMAGE_DIR, photo, photoFile);
             } catch (IOException ioException) {
-                return "redirect:/details-admin/" + id.toString();
+                return "redirect:/details-admin";
             }
         }
-        DetailDTO detailDTO = bicycleService.getById(id).map(bicycle -> {
+        detailService.save(newDetail);
+       /* DetailDTO detailDTO = bicycleService.getById(id).map(bicycle -> {
             Long detailId = newDetail.getId();
             if (detailId != null) {
                 DetailDTO _detailDTO = detailService.getById(detailId).orElseThrow(() -> new ResourceNotFoundException("Not found detail with such id!"));
@@ -134,11 +126,11 @@ public class AdminController {
             bicycleService.save(bicycle);
             return saved;
         }).orElseThrow(() -> new ResourceNotFoundException("Not found bicycle with such id!"));
-
-        return "redirect:/details-admin/" + id.toString();
+        */
+        return "redirect:/details-admin";
     }
 
-    @GetMapping("/admin/{bicycleId}/details/remove/{id}")
+    @GetMapping("/details-admin/details/remove/{id}")
     public String removeDetail(@PathVariable Long bicycleId,
                                @PathVariable Long id,
                                RedirectAttributes redirectAttributes) {
@@ -153,9 +145,9 @@ public class AdminController {
             }
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
-            return "redirect:/admin";
+            return "redirect:/details-admin";
         }
-        return "redirect:/admin";
+        return "redirect:/details-admin";
     }
 
     private String bicycleTypeAsRegularString(BicycleType bicycleType) {

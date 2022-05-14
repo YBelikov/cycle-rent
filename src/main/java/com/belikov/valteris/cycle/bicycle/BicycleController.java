@@ -97,6 +97,15 @@ public class BicycleController {
         return json.toString();
     }
 
+    @GetMapping("/api/details/all")
+    @ResponseBody
+    public String allDetails() {
+        List<DetailDTO> allDetails = detailService.getAll();
+        JSONObject json = new JSONObject();
+        json.put("details", allDetails);
+        return json.toString();
+    }
+
     @GetMapping("/api/details/{id}")
     @ResponseBody
     public DetailDTO detail(@PathVariable Long id) {
