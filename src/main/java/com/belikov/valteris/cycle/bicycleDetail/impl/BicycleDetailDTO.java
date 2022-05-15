@@ -1,7 +1,9 @@
 package com.belikov.valteris.cycle.bicycleDetail.impl;
 
 import com.belikov.valteris.cycle.bicycle.model.Bicycle;
+import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.detail.model.Detail;
+import com.belikov.valteris.cycle.detail.model.DetailDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +11,6 @@ import lombok.Setter;
 @Setter
 public class BicycleDetailDTO {
     Long id;
-    Bicycle bicycle;
-    Detail detail;
+    BicycleDTO bicycle;
+    DetailDTO detail;
 }

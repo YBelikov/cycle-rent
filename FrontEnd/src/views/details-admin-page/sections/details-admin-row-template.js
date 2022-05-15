@@ -11,5 +11,5 @@ export const detailsAdminRowTemplate =  ({
          <td>${description}</td>
          <td>${price}</td>
          <td><a href="/detail-editor/${id}"><i class="fas fa-edit fa-lg"></i></a></td>
-         <td><a href="/admin/details/remove/${id}"><i class="fas fa-trash-alt fa-lg"></i></td>
+         <td><a href="/details-admin/details/remove/${id}"><i class="fas fa-trash-alt fa-lg"></i></td>
      </tr>`;

@@ -5,6 +5,9 @@ import com.belikov.valteris.cycle.bicycle.BicycleService;
 import com.belikov.valteris.cycle.bicycle.model.Bicycle;
 import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.bicycle.model.BicycleType;
+import com.belikov.valteris.cycle.bicycleDetail.BicycleDetailService;
+import com.belikov.valteris.cycle.bicycleDetail.impl.BicycleDetailDTO;
+import com.belikov.valteris.cycle.bicycleDetail.model.BicycleDetail;
 import com.belikov.valteris.cycle.detail.DetailService;
 import com.belikov.valteris.cycle.detail.model.DetailDTO;
 import lombok.AllArgsConstructor;
@@ -21,14 +24,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AdminController {
     private final String PATH_TO_BICYCLES_IMAGE_DIR = "images/bicycles/";
     private final String PATH_TO_DETAILS_IMAGE_DIR = "images/details/";
+
     private final BicycleService bicycleService;
     private final DetailService detailService;
+    private final BicycleDetailService bicycleDetailService;
 
     @GetMapping("/bicycles-admin")
     public String adminPage() {
@@ -53,7 +59,7 @@ public class AdminController {
         return "detail-editor";
     }
 
-    @PostMapping("/bicycle-admin/bicycle/add")
+    @PostMapping("/bicycles-admin/bicycle/add")
     public String addBicycle(@RequestParam("image") MultipartFile photoFile,
                              @Valid @ModelAttribute("bicycle") BicycleDTO newBicycle,
                              BindingResult bindingResult,
@@ -93,9 +99,7 @@ public class AdminController {
     }
 
     @PostMapping("/details-admin/detail/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String addDetail(@PathVariable Long id,
-                            @RequestParam("image") MultipartFile photoFile,
+    public String addDetail(@RequestParam("image") MultipartFile photoFile,
                             @Valid @ModelAttribute("detail") DetailDTO newDetail,
                             BindingResult bindingResult,
                             Model model,
@@ -113,36 +117,26 @@ public class AdminController {
             }
         }
         detailService.save(newDetail);
-       /* DetailDTO detailDTO = bicycleService.getById(id).map(bicycle -> {
-            Long detailId = newDetail.getId();
-            if (detailId != null) {
-                DetailDTO _detailDTO = detailService.getById(detailId).orElseThrow(() -> new ResourceNotFoundException("Not found detail with such id!"));
-                bicycle.getDetailDTOS().add(_detailDTO);
-                bicycleService.save(bicycle);
-                return _detailDTO;
-            }
-            DetailDTO saved = detailService.save(newDetail);
-            bicycle.getDetailDTOS().add(saved);
-            bicycleService.save(bicycle);
-            return saved;
-        }).orElseThrow(() -> new ResourceNotFoundException("Not found bicycle with such id!"));
-        */
         return "redirect:/details-admin";
     }
 
     @GetMapping("/details-admin/details/remove/{id}")
-    public String removeDetail(@PathVariable Long bicycleId,
-                               @PathVariable Long id,
+    public String removeDetail(@PathVariable Long id,
                                RedirectAttributes redirectAttributes) {
         try {
-            BicycleDTO bicycle = bicycleService.getById(bicycleId).orElse(new BicycleDTO());
-            bicycle.getDetailDTOS().removeIf(detailDTO -> detailDTO.getId() == id);
-            bicycleService.save(bicycle);
             DetailDTO detailToDelete = detailService.getById(id).orElse(new DetailDTO());
-            detailService.delete(id);
+            List<BicycleDetailDTO> result = bicycleDetailService.getByDetailId(id);
+
+            for (BicycleDetailDTO bicycleDetailPair : result) {
+                BicycleDTO bicycle = bicycleDetailPair.getBicycle();
+                bicycle.getDetailDTOS().removeIf(detailDTO -> detailDTO.getId() == id);
+                bicycleService.save(bicycle);
+            }
+
             if (detailToDelete.getPhoto() != null && !detailToDelete.getPhoto().isEmpty()) {
                 FileUtils.removeFile(PATH_TO_DETAILS_IMAGE_DIR, detailToDelete.getPhoto());
             }
+            detailService.delete(id);
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
             return "redirect:/details-admin";

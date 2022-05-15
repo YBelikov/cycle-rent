@@ -1,7 +1,7 @@
 <div class="col-md-4 pl-20 detail-edit-area">
   <h2 th:inline="text"> Item: [[${detail.name}]]</h2>
   <img class="img-fluid py-3" id="detailImage" th:src="@{/images/details/{photo}(photo=${detail.photo})}" alt="No image"/>
-  <form th:action="@{/admin/bicycle/detail/add}" th:object="${detail}" method="post" enctype="multipart/form-data">
+  <form th:action="@{/details-admin/detail/add}" th:object="${detail}" method="post" enctype="multipart/form-data">
     <input type="hidden" th:field="*{id}"/>
     <input type="hidden" th:field="*{photo}"/>
     <div class="form-group py-3">

@@ -14,8 +14,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class BicycleDTO {
-    private Long id;
 
+    public void removeDetail(Long id) {
+        detailDTOS.removeIf(detailDTO -> {
+            return detailDTO.getId() == id;
+        });
+    }
+
+    private Long id;
     @NotBlank(message = "Name of bicycle is required")
     private String name;
 

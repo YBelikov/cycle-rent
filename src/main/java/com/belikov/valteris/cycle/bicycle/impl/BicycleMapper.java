@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BicycleMapper implements Mapper<BicycleDTO, Bicycle> {
-
     private final DetailMapper detailMapper;
 
     @Override

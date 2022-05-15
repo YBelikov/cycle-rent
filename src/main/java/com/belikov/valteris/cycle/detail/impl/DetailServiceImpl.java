@@ -19,6 +19,14 @@ public class DetailServiceImpl implements DetailService {
 
     private final DetailRepository detailRepository;
     private final Mapper<DetailDTO, Detail> detailMapper;
+//
+//    public void setDetailRepository(DetailRepository detailRepository) {
+//        this.detailRepository = detailRepository;
+//    }
+//
+//    public void setDetailMapper(Mapper<DetailDTO, Detail> detailMapper) {
+//        this.detailMapper = detailMapper;
+//    }
 
     @Override
     public DetailDTO save(DetailDTO newDetail) {
