@@ -36,6 +36,12 @@ public class AdminController {
     private final DetailService detailService;
     private final BicycleDetailService bicycleDetailService;
 
+    @GetMapping("/bicycle-detail-admin/{id}")
+    public String bicycleDetailAdmin(Model model) {
+        model.addAttribute("details", detailService.getAll());
+        return "bicycle-detail-admin-page";
+    }
+
     @GetMapping("/bicycles-admin")
     public String adminPage() {
         return "bicycles-admin-page";

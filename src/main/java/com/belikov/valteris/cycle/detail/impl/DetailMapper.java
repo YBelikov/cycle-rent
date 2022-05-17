@@ -20,9 +20,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class DetailMapper implements Mapper<DetailDTO, Detail> {
-    //@Autowired private BicycleMapper bicycleMapper;
-    //@Autowired private OrderMapper orderMapper;
-    @Override
+   @Override
     public DetailDTO mapEntityToDomain(Detail entity) {
         if (entity == null) {
             return null;

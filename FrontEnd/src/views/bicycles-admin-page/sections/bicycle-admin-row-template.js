@@ -9,7 +9,7 @@ export const bicycleAdminRowTemplate =  ({
          description = ''
     }) =>
         `<tr>
-            <th scope="row"><a href="/details-admin/${id}">${name}</a></th>
+            <th scope="row"><a href="/bicycle-detail-admin/${id}">${name}</a></th>
                 <td class="w-25"><img class="img-fluid img-thumbnail" src="/images/bicycles/${photo}" alt="Sheep" /></td>
                 <td>${description}</td>
                 <td>${price}</td>

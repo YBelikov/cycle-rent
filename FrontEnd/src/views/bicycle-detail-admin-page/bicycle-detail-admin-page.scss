@@ -1,0 +1,17 @@
+@import "../../scss/variables.scss";
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+// Components
+@import "../../scss/global.scss";
+@import "../../scss/components/buttons.scss";
+@import "../../scss/components/navbar.scss";
+
+//Sections
+@import "../../common/navigation/navigation.scss";
+@import "../bicycle-page/sections/details-container.scss";
+@import "../../common/footer/footer.scss";
+
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: white;
+}
