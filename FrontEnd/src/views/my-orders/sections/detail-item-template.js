@@ -7,7 +7,7 @@ export const getDetailItemTemplate =
     }, quantity) =>
         `<div class="info-list-item">
           <div class="bicycle-name">
-            <img src="img/details/${photo}" alt="${name}"/>
+            <img src="images/details/${photo}" alt="${name}"/>
             <span>${name}</span>
           </div>
           <div class="divider"></div>

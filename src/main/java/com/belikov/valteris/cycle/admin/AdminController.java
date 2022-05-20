@@ -2,18 +2,18 @@ package com.belikov.valteris.cycle.admin;
 
 import com.belikov.valteris.cycle.FileUtils;
 import com.belikov.valteris.cycle.bicycle.BicycleService;
-import com.belikov.valteris.cycle.bicycle.model.Bicycle;
 import com.belikov.valteris.cycle.bicycle.model.BicycleDTO;
 import com.belikov.valteris.cycle.bicycle.model.BicycleType;
 import com.belikov.valteris.cycle.bicycleDetail.BicycleDetailService;
 import com.belikov.valteris.cycle.bicycleDetail.impl.BicycleDetailDTO;
-import com.belikov.valteris.cycle.bicycleDetail.model.BicycleDetail;
 import com.belikov.valteris.cycle.detail.DetailService;
 import com.belikov.valteris.cycle.detail.model.DetailDTO;
+
+import com.belikov.valteris.cycle.user.model.UserDTO;
 import lombok.AllArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,9 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@SessionAttributes({"userDTO"})
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AdminController {
     private final String PATH_TO_BICYCLES_IMAGE_DIR = "images/bicycles/";
@@ -36,14 +38,53 @@ public class AdminController {
     private final DetailService detailService;
     private final BicycleDetailService bicycleDetailService;
 
+
+
     @GetMapping("/bicycle-detail-admin/{id}")
-    public String bicycleDetailAdmin(Model model) {
-        model.addAttribute("details", detailService.getAll());
+    public String bicycleDetailAdmin(@PathVariable Long id, Model model) {
+        BicycleDTO bicycle = bicycleService.getById(id).orElse(new BicycleDTO());
+        List<DetailDTO> details = bicycle.getDetailDTOS();
+        List<DetailDTO> allDetails = detailService.getAll();
+        for (DetailDTO detail : allDetails) {
+            for (DetailDTO detailOfBicycle : details) {
+                if (detailOfBicycle.getId().equals(detail.getId())) {
+                    detail.setIsChecked(true);
+                }
+            }
+        }
+        model.addAttribute("bicycleId", id);
+        model.addAttribute("details", allDetails);
         return "bicycle-detail-admin-page";
     }
 
+    @PostMapping("/bicycle/updateBicycleDetails")
+    @ResponseBody
+    public String remapDetails(@RequestBody String data,
+                               Model model,
+                               RedirectAttributes redirectAttributes) {
+        JSONObject jsonData = new JSONObject(data);
+        JSONArray jsonArray = jsonData.getJSONArray("listOfId");
+        Long bicycleId = jsonData.getLong("bicycleId");
+        List<Long> listOfId = new ArrayList<>();
+
+        for (int index = 0; index < jsonArray.length(); ++index) {
+            listOfId.add(jsonArray.getLong(index));
+        }
+
+        List<DetailDTO> chosenDetail = new ArrayList<>();
+        for (Long detailId : listOfId) {
+            chosenDetail.add(detailService.getById(detailId).orElse(new DetailDTO()));
+        }
+
+        BicycleDTO editedBicycle = bicycleService.getById(bicycleId).orElse(new BicycleDTO());
+        editedBicycle.setDetailDTOS(chosenDetail);
+        bicycleService.save(editedBicycle);
+        JSONObject json = new JSONObject();
+        return json.toString();
+    }
+
     @GetMapping("/bicycles-admin")
-    public String adminPage() {
+    public String adminPage(@ModelAttribute("userDTO") UserDTO userDTO, Model model) {
         return "bicycles-admin-page";
     }
 
@@ -111,6 +152,7 @@ public class AdminController {
                             Model model,
                             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+
             return "detail-editor";
         }
         if (newDetail.getPhoto() == null || newDetail.getPhoto().isEmpty()) {

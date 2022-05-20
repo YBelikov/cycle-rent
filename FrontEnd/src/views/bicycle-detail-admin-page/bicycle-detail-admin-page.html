@@ -13,25 +13,28 @@
 </head>
 <body>
 <include src="../../common/navigation/navigation-minor.html"/>
-<button class="btn btn-success save-button mt-3" type="submit">Save <em class="fas fa-save"></em></button>
+<div class="col-lg-10 pl-20 bicycle-detail-area">
+<button class="btn btn-success save-button mt-3" id="submit" type="submit">Submit <em class="fas fa-save"></em></button>
 <a th:href="@{/bicycles-admin}" id="cancel" type="cancel" class="btn btn-danger cancel-button mt-3">Cancel</a>
-<li class="list-group-item">
-    <div th:each="detail : ${details}" class="detail-row mt-3 media align-items-lg-center flex-column flex-lg-row">
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" th:id="${detail.id}" th:data-price="${detail.price}">
-            <label class="custom-control-label" th:for="${detail.id}"></label>
-        </div>
-        <div class="media-body order-2 order-lg-1">
-            <h5 class="mt-0 font-weight-bold mb-2">[[${detail.name}]]</h5>
-            <p class="font-italic text-muted mb-0 small">[[${detail.description}]]</p>
-            <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2">[[${detail.price}]] UAH</h6>
+    <input class="bicycleId" type="hidden" th:id="${bicycleId}"/>
+    <li class="list-group-item">
+        <div th:each="detail : ${details}" class="detail-row mt-3 media align-items-lg-center flex-column flex-lg-row">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" th:id="${detail.id}" th:data-price="${detail.price}" th:checked="${detail.isChecked}">
+                <label class="custom-control-label" th:for="${detail.id}"></label>
             </div>
+            <div class="media-body order-2 order-lg-1">
+                <h5 class="mt-0 font-weight-bold mb-2">[[${detail.name}]]</h5>
+                <p class="font-italic text-muted mb-0 small">[[${detail.description}]]</p>
+                <div class="d-flex align-items-center justify-content-between mt-1">
+                    <h6 class="font-weight-bold my-2">[[${detail.price}]] UAH</h6>
+                </div>
+            </div>
+            <img th:src="@{/images/details/{photo}(photo=${detail.photo})}" alt="Generic placeholder image"
+                 width="200" class="ml-lg-5 order-1 order-lg-2">
         </div>
-        <img th:src="@{/images/details/{photo}(photo=${detail.photo})}" alt="Generic placeholder image"
-             width="200" class="ml-lg-5 order-1 order-lg-2">
-    </div>
-</li>
+    </li>
+</div>
 <include src="../../common/footer/footer.html"/>
 </body>
 </html>

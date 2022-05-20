@@ -14,6 +14,8 @@
         <li class="nav-item"><a class="nav-link" th:href="@{/bicycles}">Bicycles</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/myOrders}">My orders</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/cart}">Basket</a></li>
+        <li th:if="${session.get('userDTO').getRole() == 'ADMIN'}" class="nav-item"><a class="nav-link" th:href="@{/bicycles-admin}">Bicycles admin</a></li>-->
+        <li th:if="${session.get('userDTO').getRole() == 'ADMIN'}" class="nav-item"><a class="nav-link" th:href="@{/details-admin}">Details admin</a></li>-->
         <li class="nav-item"><a class="nav-link" th:href="@{/logout}"><em
             class="fas fa-sign-out-alt"></em></a>
         </li>

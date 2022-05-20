@@ -17,6 +17,8 @@ import java.util.List;
 public class DetailDTO {
     public Long id;
 
+    public Boolean isChecked;
+
     @NotBlank(message = "Detail should have a name")
     public String name;
 

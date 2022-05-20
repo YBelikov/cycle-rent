@@ -18,6 +18,7 @@ public class UserMapper implements Mapper<UserDTO, User> {
         userDTO.setUsername(entity.getUsername());
         userDTO.setEmail(entity.getEmail());
         userDTO.setPassword(entity.getPassword());
+        userDTO.setRole(entity.getRole().toString());
         return userDTO;
     }
 

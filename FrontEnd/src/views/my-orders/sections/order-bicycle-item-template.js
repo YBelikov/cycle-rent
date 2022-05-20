@@ -6,7 +6,7 @@ export const getOrderBicycleTemplate =
     }, totalTime) =>
         `<div class="info-list-item">
           <a class="bicycle-name" href="/bicycle/${bicycleDTO.id}">
-            <img src="img/bicycles/${bicycleDTO.photo}" alt="${bicycleDTO.name}"/>
+            <img src="images/bicycles/${bicycleDTO.photo}" alt="${bicycleDTO.name}"/>
             <span>${bicycleDTO.name}</span>
           </a>
           <div class="divider"></div>

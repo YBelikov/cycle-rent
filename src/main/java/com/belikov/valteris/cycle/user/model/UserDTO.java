@@ -31,4 +31,5 @@ public class UserDTO {
     @Size(min = 5, message = "Password must be more than 5 symbols!")
     private String rePassword;
 
+    private String role;
 }
